@@ -30,6 +30,7 @@ export const starterConfig: SiteConfig = {
     {
       id: 'hero',
       component: 'HeroSection',
+      variant: 'centered',
       data: {
         eyebrow: { en: 'Starter', ar: 'قالب' },
         title: { en: 'Build anything', ar: 'ابنِ أي شيء' },
@@ -77,6 +78,7 @@ export const starterConfig: SiteConfig = {
     {
       id: 'services',
       component: 'ServicesSection',
+      variant: 'rows',
       data: {
         eyebrow: { en: 'What we do', ar: 'ماذا نقدّم' },
         heading: { en: 'Services', ar: 'خدماتنا' },

@@ -57,7 +57,10 @@ export type SectionComponent =
 export interface Section<T = unknown> {
   /** anchor id, e.g. "services" */
   id: string
+  /** the section kind (which registry entry to render) */
   component: SectionComponent
+  /** layout variant within the kind; falls back to 'default' when omitted */
+  variant?: string
   enabled?: boolean
   data: T
 }
