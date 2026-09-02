@@ -29,7 +29,7 @@ export const starterTheme: ThemeConfig = {
   fonts: {
     display: "'Space Grotesk', ui-sans-serif, system-ui, sans-serif",
     body: "'Inter', ui-sans-serif, system-ui, sans-serif",
-    arabic: "'IBM Plex Sans Arabic', 'Inter', ui-sans-serif, system-ui, sans-serif",
+    arabic: "'Cairo', ui-sans-serif, system-ui, sans-serif",
   },
   // rich-token preset: tighter, sharper, smaller type — visibly different from Rolaco
   shape: 'sharp',

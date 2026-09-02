@@ -43,7 +43,7 @@ export default defineNuxtConfig({
     families: [
       { name: 'Space Grotesk', provider: 'google' },
       { name: 'Inter', provider: 'google' },
-      { name: 'IBM Plex Sans Arabic', provider: 'google' },
+      { name: 'Cairo', provider: 'google' },
     ],
   },
 })

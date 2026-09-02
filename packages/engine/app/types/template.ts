@@ -189,6 +189,11 @@ export interface SiteConfig {
     note?: Localized
     columns?: { title: Localized; links: NavItem[] }[]
   }
+  /** optional site-wide features */
+  features?: {
+    /** show the floating scroll-to-top button (default: true) */
+    scrollTop?: boolean
+  }
 }
 
 export interface Template {
