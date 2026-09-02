@@ -30,6 +30,10 @@ export interface ThemePalette {
   glow: string
 }
 
+export type ShapePreset = 'sharp' | 'soft' | 'pill'
+export type DensityPreset = 'compact' | 'default' | 'airy'
+export type TypeScalePreset = 'compact' | 'default' | 'spacious'
+
 export interface ThemeConfig {
   light: ThemePalette
   dark: ThemePalette
@@ -38,6 +42,12 @@ export interface ThemeConfig {
     body?: string
     arabic?: string
   }
+  /** corner-radius scale (default 'soft') */
+  shape?: ShapePreset
+  /** vertical spacing rhythm (default 'default') */
+  density?: DensityPreset
+  /** overall type-size multiplier (default 'default') */
+  typeScale?: TypeScalePreset
 }
 
 /* ---------------------------------------------------------------- */

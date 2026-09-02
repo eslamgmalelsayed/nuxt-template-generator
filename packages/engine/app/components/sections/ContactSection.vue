@@ -186,7 +186,7 @@ function onSubmit() {
 <style scoped>
 .field {
   width: 100%;
-  border-radius: 0.75rem;
+  border-radius: var(--radius-md);
   border: 1px solid var(--border);
   background: var(--bg);
   color: var(--text);
