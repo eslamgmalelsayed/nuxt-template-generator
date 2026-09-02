@@ -15,6 +15,7 @@ export const rolacoTheme: ThemeConfig = {
     text: '#e8edf9',
     textMuted: '#aeb9d4',
     accent: '#2f7bff',
+    accentStrong: '#1d5ad6',
     glow: '#38bdf8',
   },
   light: {
@@ -26,6 +27,7 @@ export const rolacoTheme: ThemeConfig = {
     text: '#0a0f1f',
     textMuted: '#4a5878',
     accent: '#2f7bff',
+    accentStrong: '#1d5ad6',
     glow: '#2f7bff',
   },
   fonts: {

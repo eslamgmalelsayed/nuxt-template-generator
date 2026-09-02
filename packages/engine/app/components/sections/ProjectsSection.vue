@@ -17,12 +17,12 @@ const grads = [
 </script>
 
 <template>
-  <section :id="sectionId" class="py-20 lg:py-28">
+  <section :id="sectionId" class="section">
     <div class="container-x">
       <div class="max-w-2xl">
         <p v-if="data.eyebrow" class="eyebrow">{{ tl(data.eyebrow) }}</p>
-        <h2 class="heading-display mt-4 text-3xl text-text sm:text-4xl">{{ tl(data.heading) }}</h2>
-        <p v-if="data.intro" class="mt-4 text-lg text-muted">{{ tl(data.intro) }}</p>
+        <h2 class="h2 mt-4 text-text">{{ tl(data.heading) }}</h2>
+        <p v-if="data.intro" class="mt-4 body-lg text-muted">{{ tl(data.intro) }}</p>
       </div>
 
       <ul class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -44,7 +44,7 @@ const grads = [
               <p class="text-xs font-semibold uppercase tracking-wider" style="color: var(--glow)">
                 {{ tl(p.category) }}
               </p>
-              <h3 class="heading-display mt-1 text-lg text-white">{{ tl(p.title) }}</h3>
+              <h3 class="h4 mt-1 text-white">{{ tl(p.title) }}</h3>
             </div>
           </article>
         </Reveal>

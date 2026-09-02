@@ -7,10 +7,10 @@ const { tl } = useSiteConfig()
 </script>
 
 <template>
-  <section :id="sectionId" class="border-y border-border bg-surface/40 py-14">
+  <section :id="sectionId" class="border-y border-border bg-surface/40 section-tight">
     <div class="container-x">
       <p v-if="data.eyebrow" class="eyebrow justify-center text-center">{{ tl(data.eyebrow) }}</p>
-      <h2 v-if="data.heading" class="heading-display mt-3 text-center text-2xl text-text">
+      <h2 v-if="data.heading" class="h3 mt-3 text-center text-text">
         {{ tl(data.heading) }}
       </h2>
 

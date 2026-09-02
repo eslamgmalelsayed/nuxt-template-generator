@@ -25,6 +25,8 @@ export interface ThemePalette {
   text: string
   textMuted: string
   accent: string
+  /** deeper accent used as the fill behind white button text (must meet AA ≥4.5:1) */
+  accentStrong: string
   glow: string
 }
 

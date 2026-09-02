@@ -19,6 +19,7 @@ function paletteVars(p: ThemePalette) {
     `--text:${p.text}`,
     `--text-muted:${p.textMuted}`,
     `--accent:${p.accent}`,
+    `--accent-strong:${p.accentStrong}`,
     `--glow:${p.glow}`,
   ].join(';')
 }

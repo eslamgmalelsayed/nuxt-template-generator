@@ -16,13 +16,13 @@ function onSubmit() {
 </script>
 
 <template>
-  <section :id="sectionId" class="py-20 lg:py-28">
+  <section :id="sectionId" class="section">
     <div class="container-x grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:items-start">
       <!-- Info -->
       <div>
         <p v-if="data.eyebrow" class="eyebrow">{{ tl(data.eyebrow) }}</p>
-        <h2 class="heading-display mt-4 text-3xl text-text sm:text-4xl">{{ tl(data.heading) }}</h2>
-        <p v-if="data.intro" class="mt-4 max-w-md text-lg text-muted">{{ tl(data.intro) }}</p>
+        <h2 class="h2 mt-4 text-text">{{ tl(data.heading) }}</h2>
+        <p v-if="data.intro" class="mt-4 max-w-md body-lg text-muted">{{ tl(data.intro) }}</p>
 
         <dl class="mt-8 space-y-4">
           <div class="flex items-start gap-3">

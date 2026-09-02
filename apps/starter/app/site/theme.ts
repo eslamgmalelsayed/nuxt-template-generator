@@ -11,6 +11,7 @@ export const starterTheme: ThemeConfig = {
     text: '#e8f2ec',
     textMuted: '#a7bdb2',
     accent: '#10b981',
+    accentStrong: '#0b6e4e',
     glow: '#34d399',
   },
   light: {
@@ -22,6 +23,7 @@ export const starterTheme: ThemeConfig = {
     text: '#0b1f18',
     textMuted: '#46685b',
     accent: '#0f9d70',
+    accentStrong: '#0b6e4e',
     glow: '#0f9d70',
   },
   fonts: {

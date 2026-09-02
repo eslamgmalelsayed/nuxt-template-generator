@@ -48,6 +48,17 @@
   --accent-strong: #1d5ad6; /* deeper fill so white button text meets AA (>=4.5:1) */
   --glow: #2f7bff;
   --grid-line: rgba(47, 123, 255, 0.08);
+
+  /* --- theme-independent design tokens (spacing / radius / elevation) --- */
+  --section-y: clamp(4rem, 3rem + 6vw, 7rem);
+  --section-y-tight: clamp(3rem, 2.4rem + 3vw, 4.5rem);
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
+  --radius-pill: 9999px;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06), 0 2px 10px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 8px 30px -10px rgba(0, 0, 0, 0.22);
 }
 
 /* ---- Dark theme (brand default look) ---- */
@@ -108,6 +119,62 @@
   [dir='rtl'] .heading-display {
     font-family: var(--font-arabic);
   }
+
+  /* --- fluid type scale (pair size + line-height + tracking + font) --- */
+  .h1 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(2.25rem, 1.5rem + 3.4vw, 3.75rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .h2 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.75rem, 1.3rem + 2vw, 2.5rem);
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+  }
+  .h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.25rem, 1.05rem + 0.9vw, 1.6rem);
+    line-height: 1.2;
+  }
+  .h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.05rem, 0.98rem + 0.4vw, 1.25rem);
+    line-height: 1.3;
+  }
+  .body-lg {
+    font-size: clamp(1.05rem, 1rem + 0.3vw, 1.2rem);
+    line-height: 1.6;
+  }
+  .body {
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+  .small {
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+  [dir='rtl'] :is(.h1, .h2, .h3, .h4) {
+    font-family: var(--font-arabic);
+  }
+
+  /* readable line length for long-form text */
+  .measure {
+    max-inline-size: 65ch;
+  }
+
+  /* standardized vertical rhythm for page sections */
+  .section {
+    padding-block: var(--section-y);
+  }
+  .section-tight {
+    padding-block: var(--section-y-tight);
+  }
   .btn-primary {
     @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white transition;
     background: var(--accent-strong);
@@ -125,7 +192,8 @@
     border-color: var(--accent);
   }
   .card {
-    @apply rounded-2xl p-6 transition;
+    @apply p-6 transition;
+    border-radius: var(--radius-xl);
     background: var(--surface);
     border: 1px solid var(--border);
   }

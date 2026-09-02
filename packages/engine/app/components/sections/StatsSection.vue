@@ -7,7 +7,7 @@ const { tl } = useSiteConfig()
 </script>
 
 <template>
-  <section :id="sectionId" class="border-y border-border bg-surface/40 py-14">
+  <section :id="sectionId" class="border-y border-border bg-surface/40 section-tight">
     <div class="container-x">
       <h2 v-if="data.heading" class="sr-only">{{ tl(data.heading) }}</h2>
       <dl class="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-4">

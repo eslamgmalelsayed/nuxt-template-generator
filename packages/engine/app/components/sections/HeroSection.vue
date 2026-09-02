@@ -29,14 +29,14 @@ const { tl } = useSiteConfig()
           {{ tl(data.eyebrow) }}
         </p>
 
-        <h1 class="heading-display mt-5 text-4xl text-text sm:text-5xl lg:text-6xl">
+        <h1 class="h1 mt-5 text-text">
           {{ tl(data.title) }}
           <span v-if="data.titleAccent" class="block" style="color: var(--accent)">{{
             tl(data.titleAccent)
           }}</span>
         </h1>
 
-        <p v-if="data.subtitle" class="mt-6 max-w-xl text-lg leading-relaxed text-muted">
+        <p v-if="data.subtitle" class="mt-6 measure body-lg text-muted">
           {{ tl(data.subtitle) }}
         </p>
 
