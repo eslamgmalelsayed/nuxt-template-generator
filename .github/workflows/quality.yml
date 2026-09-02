@@ -1,0 +1,43 @@
+name: Quality (Lighthouse)
+
+# Quality gate: builds each app's static output and runs Lighthouse for
+# Performance / SEO / Accessibility / Best-Practices. Accessibility and SEO
+# below threshold fail the run (see each app's lighthouserc.cjs).
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest # Chrome is preinstalled on GitHub's Ubuntu runners
+    strategy:
+      fail-fast: false
+      matrix:
+        app: [rolaco, starter]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build + Lighthouse (${{ matrix.app }})
+        run: pnpm --filter ${{ matrix.app }} test:quality
+
+      - name: Upload Lighthouse reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-${{ matrix.app }}
+          path: apps/${{ matrix.app }}/.lighthouseci
+          if-no-files-found: ignore

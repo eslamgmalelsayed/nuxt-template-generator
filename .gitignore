@@ -1,0 +1,20 @@
+# deps
+node_modules
+
+# nuxt / build
+.nuxt
+.output
+.data
+dist
+
+# quality-test artifacts
+.lighthouseci
+lh-*.json
+
+# env & logs
+.env
+*.log
+
+# OS
+.DS_Store
+Thumbs.db

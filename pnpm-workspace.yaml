@@ -1,0 +1,8 @@
+packages:
+  - 'packages/*'
+  - 'apps/*'
+
+# Approve esbuild's install script (Vite/Nuxt need it); pnpm 11 blocks build
+# scripts by default.
+allowBuilds:
+  esbuild: true

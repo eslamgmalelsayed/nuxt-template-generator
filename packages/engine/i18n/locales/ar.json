@@ -1,0 +1,41 @@
+{
+  "skipToContent": "تخطَّ إلى المحتوى",
+  "nav": {
+    "openMenu": "افتح القائمة",
+    "closeMenu": "أغلق القائمة",
+    "menu": "التنقل الرئيسي"
+  },
+  "theme": {
+    "toDark": "التبديل إلى الوضع الداكن",
+    "toLight": "التبديل إلى الوضع الفاتح"
+  },
+  "locale": {
+    "label": "تغيير اللغة",
+    "switchTo": "English"
+  },
+  "cta": {
+    "getQuote": "اطلب عرض سعر"
+  },
+  "form": {
+    "name": "الاسم الكامل",
+    "email": "البريد الإلكتروني",
+    "company": "الجهة / الشركة",
+    "message": "كيف يمكننا مساعدتك؟",
+    "send": "إرسال الطلب",
+    "namePlaceholder": "اسمك",
+    "emailPlaceholder": "you{'@'}company.com",
+    "companyPlaceholder": "اسم الشركة",
+    "messagePlaceholder": "أخبرنا عن مشروعك…",
+    "note": "هذا نموذج تجريبي ولا يتم إرساله فعليًا.",
+    "success": "شكرًا لك — هذا نموذج تجريبي ولم يتم إرسال أي بيانات فعليًا."
+  },
+  "contact": {
+    "emailLabel": "البريد الإلكتروني",
+    "phoneLabel": "الهاتف",
+    "addressLabel": "العنوان"
+  },
+  "footer": {
+    "rights": "جميع الحقوق محفوظة.",
+    "quickLinks": "روابط سريعة"
+  }
+}

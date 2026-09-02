@@ -1,0 +1,41 @@
+{
+  "skipToContent": "Skip to content",
+  "nav": {
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "menu": "Main navigation"
+  },
+  "theme": {
+    "toDark": "Switch to dark theme",
+    "toLight": "Switch to light theme"
+  },
+  "locale": {
+    "label": "Change language",
+    "switchTo": "العربية"
+  },
+  "cta": {
+    "getQuote": "Get a quote"
+  },
+  "form": {
+    "name": "Full name",
+    "email": "Email address",
+    "company": "Company",
+    "message": "How can we help?",
+    "send": "Send inquiry",
+    "namePlaceholder": "Your name",
+    "emailPlaceholder": "you{'@'}company.com",
+    "companyPlaceholder": "Company name",
+    "messagePlaceholder": "Tell us about your project…",
+    "note": "This demo form does not submit anywhere.",
+    "success": "Thanks — this is a demo, so nothing was actually sent."
+  },
+  "contact": {
+    "emailLabel": "Email",
+    "phoneLabel": "Phone",
+    "addressLabel": "Address"
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "quickLinks": "Quick links"
+  }
+}

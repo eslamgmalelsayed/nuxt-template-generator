@@ -1,0 +1,6 @@
+# Normalize line endings to LF (repo builds on Linux CI)
+* text=auto eol=lf
+*.svg text eol=lf
+*.png binary
+*.jpg binary
+*.woff2 binary
