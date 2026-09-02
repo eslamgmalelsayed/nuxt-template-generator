@@ -210,6 +210,7 @@ export const rolacoConfig: SiteConfig = {
     {
       id: 'partners',
       component: 'PartnersSection',
+      variant: 'marquee',
       data: {
         eyebrow: { en: 'Trusted by', ar: 'موضع ثقة' },
         heading: { en: 'Partners & clients', ar: 'شركاؤنا وعملاؤنا' },

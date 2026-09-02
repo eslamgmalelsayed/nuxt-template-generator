@@ -12,6 +12,7 @@ import ServicesRows from './sections/ServicesRows.vue'
 import ProjectsSection from './sections/ProjectsSection.vue'
 import ProjectsList from './sections/ProjectsList.vue'
 import PartnersSection from './sections/PartnersSection.vue'
+import PartnersMarquee from './sections/PartnersMarquee.vue'
 import ContactSection from './sections/ContactSection.vue'
 
 /**
@@ -25,7 +26,7 @@ const registry: Record<SectionComponent, Record<string, Component>> = {
   AboutSection: { default: AboutSection, stacked: AboutStacked },
   ServicesSection: { default: ServicesSection, rows: ServicesRows },
   ProjectsSection: { default: ProjectsSection, list: ProjectsList },
-  PartnersSection: { default: PartnersSection },
+  PartnersSection: { default: PartnersSection, marquee: PartnersMarquee },
   ContactSection: { default: ContactSection },
 }
 
