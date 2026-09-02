@@ -1,5 +1,10 @@
 @import 'tailwindcss';
 
+/* The engine's components live in this package (outside the consuming app, and
+   reached via node_modules), so Tailwind's default content detection misses their
+   utility classes. Explicitly scan the engine's own files. */
+@source "../../**/*.vue";
+
 /* color-mode toggles a `.dark` class on <html>; make Tailwind's dark: variant follow it */
 @custom-variant dark (&:where(.dark, .dark *));
 
