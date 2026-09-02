@@ -46,6 +46,7 @@ export const starterConfig: SiteConfig = {
     {
       id: 'stats',
       component: 'StatsSection',
+      variant: 'banded',
       data: {
         heading: { en: 'By the numbers', ar: 'بالأرقام' },
         items: [
@@ -59,6 +60,7 @@ export const starterConfig: SiteConfig = {
     {
       id: 'about',
       component: 'AboutSection',
+      variant: 'stacked',
       data: {
         eyebrow: { en: 'Who we are', ar: 'من نحن' },
         heading: { en: 'A short about heading', ar: 'عنوان تعريفي قصير' },
@@ -97,6 +99,27 @@ export const starterConfig: SiteConfig = {
             icon: 'grid',
             title: { en: 'Service three', ar: 'خدمة ثالثة' },
             description: { en: 'Describe your service here.', ar: 'صف خدمتك هنا.' },
+          },
+        ],
+      },
+    },
+    {
+      id: 'projects',
+      component: 'ProjectsSection',
+      variant: 'list',
+      data: {
+        eyebrow: { en: 'Work', ar: 'أعمال' },
+        heading: { en: 'Selected projects', ar: 'مشاريع مختارة' },
+        intro: { en: 'A few things we have shipped.', ar: 'نماذج مما أنجزناه.' },
+        items: [
+          { title: { en: 'Project Alpha', ar: 'مشروع ألفا' }, category: { en: 'Web', ar: 'ويب' } },
+          {
+            title: { en: 'Project Beta', ar: 'مشروع بيتا' },
+            category: { en: 'Brand', ar: 'هوية' },
+          },
+          {
+            title: { en: 'Project Gamma', ar: 'مشروع غاما' },
+            category: { en: 'App', ar: 'تطبيق' },
           },
         ],
       },

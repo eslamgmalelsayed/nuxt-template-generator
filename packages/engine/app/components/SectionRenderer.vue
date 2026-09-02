@@ -4,10 +4,13 @@ import type { Section, SectionComponent } from '../types/template'
 import HeroSection from './sections/HeroSection.vue'
 import HeroCentered from './sections/HeroCentered.vue'
 import StatsSection from './sections/StatsSection.vue'
+import StatsBanded from './sections/StatsBanded.vue'
 import AboutSection from './sections/AboutSection.vue'
+import AboutStacked from './sections/AboutStacked.vue'
 import ServicesSection from './sections/ServicesSection.vue'
 import ServicesRows from './sections/ServicesRows.vue'
 import ProjectsSection from './sections/ProjectsSection.vue'
+import ProjectsList from './sections/ProjectsList.vue'
 import PartnersSection from './sections/PartnersSection.vue'
 import ContactSection from './sections/ContactSection.vue'
 
@@ -18,10 +21,10 @@ import ContactSection from './sections/ContactSection.vue'
  */
 const registry: Record<SectionComponent, Record<string, Component>> = {
   HeroSection: { default: HeroSection, centered: HeroCentered },
-  StatsSection: { default: StatsSection },
-  AboutSection: { default: AboutSection },
+  StatsSection: { default: StatsSection, banded: StatsBanded },
+  AboutSection: { default: AboutSection, stacked: AboutStacked },
   ServicesSection: { default: ServicesSection, rows: ServicesRows },
-  ProjectsSection: { default: ProjectsSection },
+  ProjectsSection: { default: ProjectsSection, list: ProjectsList },
   PartnersSection: { default: PartnersSection },
   ContactSection: { default: ContactSection },
 }
