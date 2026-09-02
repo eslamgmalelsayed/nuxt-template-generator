@@ -60,7 +60,10 @@ function windows(b: { x: number; w: number; h: number }, i: number) {
       </radialGradient>
       <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
         <feGaussianBlur stdDeviation="3" result="b" />
-        <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+        <feMerge>
+          <feMergeNode in="b" />
+          <feMergeNode in="SourceGraphic" />
+        </feMerge>
       </filter>
     </defs>
 
@@ -68,13 +71,40 @@ function windows(b: { x: number; w: number; h: number }, i: number) {
     <rect x="0" y="0" width="600" height="400" fill="url(#halo)" />
 
     <!-- energy ring -->
-    <circle class="ring" cx="300" cy="120" r="66" stroke="var(--glow)" stroke-width="1.5" stroke-opacity="0.5" />
-    <circle class="ring ring--slow" cx="300" cy="120" r="90" stroke="var(--accent)" stroke-width="1" stroke-opacity="0.3" stroke-dasharray="4 10" />
+    <circle
+      class="ring"
+      cx="300"
+      cy="120"
+      r="66"
+      stroke="var(--glow)"
+      stroke-width="1.5"
+      stroke-opacity="0.5"
+    />
+    <circle
+      class="ring ring--slow"
+      cx="300"
+      cy="120"
+      r="90"
+      stroke="var(--accent)"
+      stroke-width="1"
+      stroke-opacity="0.3"
+      stroke-dasharray="4 10"
+    />
 
     <!-- flowing power lines -->
     <g stroke-linecap="round">
-      <path class="flow" d="M0 300 C 120 300, 160 210, 300 210 S 480 120, 600 120" stroke="var(--accent)" stroke-width="2" />
-      <path class="flow flow--2" d="M0 340 C 160 340, 220 270, 360 270 S 520 200, 600 190" stroke="var(--glow)" stroke-width="1.5" />
+      <path
+        class="flow"
+        d="M0 300 C 120 300, 160 210, 300 210 S 480 120, 600 120"
+        stroke="var(--accent)"
+        stroke-width="2"
+      />
+      <path
+        class="flow flow--2"
+        d="M0 340 C 160 340, 220 270, 360 270 S 520 200, 600 190"
+        stroke="var(--glow)"
+        stroke-width="1.5"
+      />
     </g>
 
     <!-- skyline -->
@@ -101,7 +131,7 @@ function windows(b: { x: number; w: number; h: number }, i: number) {
           rx="1"
           :fill="c.on ? 'var(--glow)' : 'var(--border)'"
           :class="c.on ? 'win win--on' : 'win'"
-          :style="c.on ? { animationDelay: `${(i * 3 + j) % 8 * 0.4}s` } : undefined"
+          :style="c.on ? { animationDelay: `${((i * 3 + j) % 8) * 0.4}s` } : undefined"
         />
       </template>
       <line x1="20" y1="360" x2="580" y2="360" stroke="var(--border)" stroke-width="2" />
@@ -109,12 +139,20 @@ function windows(b: { x: number; w: number; h: number }, i: number) {
 
     <!-- travelling pulses -->
     <template v-if="!reduced">
-    <circle class="pulse" r="4" fill="var(--glow)" filter="url(#glow)">
-      <animateMotion dur="7s" repeatCount="indefinite" path="M0 300 C 120 300, 160 210, 300 210 S 480 120, 600 120" />
-    </circle>
-    <circle class="pulse" r="3" fill="var(--accent)" filter="url(#glow)">
-      <animateMotion dur="9s" repeatCount="indefinite" path="M0 340 C 160 340, 220 270, 360 270 S 520 200, 600 190" />
-    </circle>
+      <circle class="pulse" r="4" fill="var(--glow)" filter="url(#glow)">
+        <animateMotion
+          dur="7s"
+          repeatCount="indefinite"
+          path="M0 300 C 120 300, 160 210, 300 210 S 480 120, 600 120"
+        />
+      </circle>
+      <circle class="pulse" r="3" fill="var(--accent)" filter="url(#glow)">
+        <animateMotion
+          dur="9s"
+          repeatCount="indefinite"
+          path="M0 340 C 160 340, 220 270, 360 270 S 520 200, 600 190"
+        />
+      </circle>
     </template>
   </svg>
 </template>

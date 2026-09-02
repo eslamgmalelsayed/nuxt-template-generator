@@ -12,7 +12,13 @@ const { tl } = useSiteConfig()
     <div class="hero-grid pointer-events-none absolute inset-0" aria-hidden="true" />
     <div
       class="pointer-events-none absolute -top-24 start-1/2 h-[520px] w-[820px] -translate-x-1/2 rounded-full opacity-60 blur-3xl"
-      style="background: radial-gradient(circle, color-mix(in srgb, var(--accent) 22%, transparent), transparent 65%)"
+      style="
+        background: radial-gradient(
+          circle,
+          color-mix(in srgb, var(--accent) 22%, transparent),
+          transparent 65%
+        );
+      "
       aria-hidden="true"
     />
 
@@ -25,7 +31,9 @@ const { tl } = useSiteConfig()
 
         <h1 class="heading-display mt-5 text-4xl text-text sm:text-5xl lg:text-6xl">
           {{ tl(data.title) }}
-          <span v-if="data.titleAccent" class="block" style="color: var(--accent)">{{ tl(data.titleAccent) }}</span>
+          <span v-if="data.titleAccent" class="block" style="color: var(--accent)">{{
+            tl(data.titleAccent)
+          }}</span>
         </h1>
 
         <p v-if="data.subtitle" class="mt-6 max-w-xl text-lg leading-relaxed text-muted">

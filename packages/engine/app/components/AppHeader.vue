@@ -20,9 +20,13 @@ watch(open, (v) => {
   isLocked.value = v
 })
 
-onClickOutside(panel, () => {
-  if (open.value) open.value = false
-}, { ignore: [toggleBtn] })
+onClickOutside(
+  panel,
+  () => {
+    if (open.value) open.value = false
+  },
+  { ignore: [toggleBtn] },
+)
 
 function close() {
   open.value = false
@@ -37,7 +41,9 @@ function onKeydown(e: KeyboardEvent) {
 <template>
   <header
     class="fixed inset-x-0 top-0 z-50 transition-colors duration-300"
-    :class="scrolled ? 'border-b border-border bg-bg/85 backdrop-blur-md' : 'border-b border-transparent'"
+    :class="
+      scrolled ? 'border-b border-border bg-bg/85 backdrop-blur-md' : 'border-b border-transparent'
+    "
     @keydown="onKeydown"
   >
     <div class="container-x flex h-18 items-center justify-between gap-4 py-3">
@@ -48,13 +54,25 @@ function onKeydown(e: KeyboardEvent) {
           style="background: var(--accent)"
           aria-hidden="true"
         >
-          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z" />
+          <svg
+            viewBox="0 0 24 24"
+            class="h-5 w-5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"
+            />
           </svg>
         </span>
         <span class="leading-tight">
           <span class="block heading-display text-lg text-text">{{ config.brand.name }}</span>
-          <span class="block text-[11px] uppercase tracking-wider text-muted">{{ config.brand.subBrand }}</span>
+          <span class="block text-[11px] uppercase tracking-wider text-muted">{{
+            config.brand.subBrand
+          }}</span>
         </span>
       </a>
 
@@ -85,10 +103,26 @@ function onKeydown(e: KeyboardEvent) {
           aria-controls="mobile-menu"
           @click="open = !open"
         >
-          <svg v-if="!open" viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <svg
+            v-if="!open"
+            viewBox="0 0 24 24"
+            class="h-5 w-5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            aria-hidden="true"
+          >
             <path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16" />
           </svg>
-          <svg v-else viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <svg
+            v-else
+            viewBox="0 0 24 24"
+            class="h-5 w-5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            aria-hidden="true"
+          >
             <path stroke-linecap="round" d="M6 6l12 12M18 6 6 18" />
           </svg>
         </button>

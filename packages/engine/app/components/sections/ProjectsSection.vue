@@ -30,14 +30,20 @@ const grads = [
           <article
             class="group relative flex aspect-[4/3] flex-col justify-end overflow-hidden rounded-2xl border border-border p-5"
           >
-            <span class="absolute inset-0" :style="{ background: grads[i % grads.length] }" aria-hidden="true" />
+            <span
+              class="absolute inset-0"
+              :style="{ background: grads[i % grads.length] }"
+              aria-hidden="true"
+            />
             <span
               class="absolute inset-0 opacity-70 transition-opacity group-hover:opacity-40"
-              style="background: linear-gradient(to top, rgba(5,7,15,0.85), transparent 70%)"
+              style="background: linear-gradient(to top, rgba(5, 7, 15, 0.85), transparent 70%)"
               aria-hidden="true"
             />
             <div class="relative">
-              <p class="text-xs font-semibold uppercase tracking-wider" style="color: var(--glow)">{{ tl(p.category) }}</p>
+              <p class="text-xs font-semibold uppercase tracking-wider" style="color: var(--glow)">
+                {{ tl(p.category) }}
+              </p>
               <h3 class="heading-display mt-1 text-lg text-white">{{ tl(p.title) }}</h3>
             </div>
           </article>

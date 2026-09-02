@@ -10,9 +10,33 @@
     "gen:starter": "pnpm --filter starter generate",
     "audit:rolaco": "pnpm --filter rolaco test:quality",
     "audit:starter": "pnpm --filter starter test:quality",
-    "audit:all": "pnpm -r test:quality"
+    "audit:all": "pnpm -r test:quality",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "lefthook install"
   },
   "devDependencies": {
-    "@lhci/cli": "^0.15.0"
+    "@eslint/js": "^9.0.0",
+    "@lhci/cli": "^0.15.0",
+    "eslint": "^9.0.0",
+    "eslint-config-prettier": "^10.0.0",
+    "eslint-plugin-vue": "^10.0.0",
+    "lefthook": "^1.7.0",
+    "lint-staged": "^15.2.0",
+    "prettier": "^3.3.0",
+    "typescript": "^5.6.0",
+    "typescript-eslint": "^8.0.0",
+    "vue-eslint-parser": "^10.0.0"
+  },
+  "lint-staged": {
+    "*.{js,ts,mjs,cjs,vue}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,css,yml,yaml}": [
+      "prettier --write"
+    ]
   }
 }

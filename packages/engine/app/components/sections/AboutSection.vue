@@ -13,7 +13,9 @@ const { tl } = useSiteConfig()
         <p v-if="data.eyebrow" class="eyebrow">{{ tl(data.eyebrow) }}</p>
         <h2 class="heading-display mt-4 text-3xl text-text sm:text-4xl">{{ tl(data.heading) }}</h2>
         <div class="mt-6 space-y-4">
-          <p v-for="(p, i) in data.body" :key="i" class="text-base leading-relaxed text-muted">{{ tl(p) }}</p>
+          <p v-for="(p, i) in data.body" :key="i" class="text-base leading-relaxed text-muted">
+            {{ tl(p) }}
+          </p>
         </div>
       </Reveal>
 
@@ -25,7 +27,13 @@ const { tl } = useSiteConfig()
               style="background: var(--accent)"
               aria-hidden="true"
             >
-              <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2">
+              <svg
+                viewBox="0 0 24 24"
+                class="h-5 w-5"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
                 <path stroke-linecap="round" stroke-linejoin="round" d="m5 13 4 4L19 7" />
               </svg>
             </span>

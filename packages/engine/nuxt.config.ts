@@ -8,13 +8,7 @@ import tailwindcss from '@tailwindcss/vite'
  * alias resolves to the CONSUMER app, not the layer.
  */
 export default defineNuxtConfig({
-  modules: [
-    '@nuxtjs/seo',
-    '@nuxtjs/i18n',
-    '@nuxtjs/color-mode',
-    '@vueuse/nuxt',
-    '@nuxt/fonts',
-  ],
+  modules: ['@nuxtjs/seo', '@nuxtjs/i18n', '@nuxtjs/color-mode', '@vueuse/nuxt', '@nuxt/fonts'],
 
   css: [fileURLToPath(new URL('./app/assets/css/main.css', import.meta.url))],
 

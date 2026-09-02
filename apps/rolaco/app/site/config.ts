@@ -58,7 +58,11 @@ export const rolacoConfig: SiteConfig = {
           ar: 'تُصمّم رولاكو — الشطوة العربية والإنارة حلول الطاقة الكهربائية والتوزيع والإضاءة التي تُبقي المملكة تعمل ليلًا ونهارًا.',
         },
         ctas: [
-          { label: { en: 'Explore services', ar: 'استكشف خدماتنا' }, to: '#services', variant: 'primary' },
+          {
+            label: { en: 'Explore services', ar: 'استكشف خدماتنا' },
+            to: '#services',
+            variant: 'primary',
+          },
           { label: { en: 'Contact us', ar: 'تواصل معنا' }, to: '#contact', variant: 'ghost' },
         ],
         media: { type: 'svg', variant: 'skyline' },
@@ -176,12 +180,30 @@ export const rolacoConfig: SiteConfig = {
           ar: 'لمحة من المشاريع التي زوّدناها بالطاقة في أنحاء المملكة.',
         },
         items: [
-          { title: { en: 'Riyadh Skyline Towers', ar: 'أبراج أفق الرياض' }, category: { en: 'Urban lighting', ar: 'إضاءة حضرية' } },
-          { title: { en: 'Coastal Power Grid', ar: 'شبكة الطاقة الساحلية' }, category: { en: 'Power systems', ar: 'أنظمة طاقة' } },
-          { title: { en: 'Industrial City Substation', ar: 'محطة المدينة الصناعية' }, category: { en: 'Switchgear', ar: 'لوحات توزيع' } },
-          { title: { en: 'Heritage District Relighting', ar: 'إعادة إنارة الحي التراثي' }, category: { en: 'Architectural', ar: 'إضاءة معمارية' } },
-          { title: { en: 'Airport Expansion', ar: 'توسعة المطار' }, category: { en: 'Infrastructure', ar: 'بنية تحتية' } },
-          { title: { en: 'Smart Campus', ar: 'الحرم الذكي' }, category: { en: 'Smart controls', ar: 'تحكم ذكي' } },
+          {
+            title: { en: 'Riyadh Skyline Towers', ar: 'أبراج أفق الرياض' },
+            category: { en: 'Urban lighting', ar: 'إضاءة حضرية' },
+          },
+          {
+            title: { en: 'Coastal Power Grid', ar: 'شبكة الطاقة الساحلية' },
+            category: { en: 'Power systems', ar: 'أنظمة طاقة' },
+          },
+          {
+            title: { en: 'Industrial City Substation', ar: 'محطة المدينة الصناعية' },
+            category: { en: 'Switchgear', ar: 'لوحات توزيع' },
+          },
+          {
+            title: { en: 'Heritage District Relighting', ar: 'إعادة إنارة الحي التراثي' },
+            category: { en: 'Architectural', ar: 'إضاءة معمارية' },
+          },
+          {
+            title: { en: 'Airport Expansion', ar: 'توسعة المطار' },
+            category: { en: 'Infrastructure', ar: 'بنية تحتية' },
+          },
+          {
+            title: { en: 'Smart Campus', ar: 'الحرم الذكي' },
+            category: { en: 'Smart controls', ar: 'تحكم ذكي' },
+          },
         ],
       },
     },
@@ -214,7 +236,11 @@ export const rolacoConfig: SiteConfig = {
         email: 'info@rolaco.example.com',
         phone: '+966 11 000 0000',
         address: { en: 'Riyadh, Saudi Arabia', ar: 'الرياض، المملكة العربية السعودية' },
-        cta: { label: { en: 'Send inquiry', ar: 'إرسال الطلب' }, to: '#contact', variant: 'primary' },
+        cta: {
+          label: { en: 'Send inquiry', ar: 'إرسال الطلب' },
+          to: '#contact',
+          variant: 'primary',
+        },
       },
     },
   ],

@@ -25,7 +25,10 @@ const { tl } = useSiteConfig()
         >
           <span
             class="inline-flex h-12 w-12 items-center justify-center rounded-xl transition"
-            style="background: color-mix(in srgb, var(--accent) 14%, transparent); color: var(--accent)"
+            style="
+              background: color-mix(in srgb, var(--accent) 14%, transparent);
+              color: var(--accent);
+            "
             aria-hidden="true"
           >
             <AppIcon :name="item.icon" class="h-6 w-6" />
