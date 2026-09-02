@@ -3,3 +3,12 @@ pre-commit:
   commands:
     lint-staged:
       run: npx lint-staged
+
+# Whole-repo gate before pushing: fails the push if lint or formatting is off.
+pre-push:
+  parallel: true
+  commands:
+    lint:
+      run: npx eslint .
+    format:
+      run: npx prettier --check .
