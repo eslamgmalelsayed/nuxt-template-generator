@@ -47,6 +47,7 @@
   --accent: #2f7bff;
   --accent-strong: #1d5ad6; /* deeper fill so white button text meets AA (>=4.5:1) */
   --glow: #2f7bff;
+  --danger: #c81e1e; /* AA on light surfaces */
   --grid-line: rgba(47, 123, 255, 0.08);
 
   /* --- theme-independent design tokens (spacing / radius / elevation) --- */
@@ -73,6 +74,7 @@
   --accent: #2f7bff;
   --accent-strong: #1d5ad6; /* deeper fill so white button text meets AA (>=4.5:1) */
   --glow: #38bdf8;
+  --danger: #ff7a7a; /* AA on dark surfaces */
   --grid-line: rgba(47, 123, 255, 0.09);
 }
 

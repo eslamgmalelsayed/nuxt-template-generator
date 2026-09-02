@@ -27,7 +27,12 @@
     "companyPlaceholder": "Company name",
     "messagePlaceholder": "Tell us about your project…",
     "note": "This demo form does not submit anywhere.",
-    "success": "Thanks — this is a demo, so nothing was actually sent."
+    "success": "Thanks — this is a demo, so nothing was actually sent.",
+    "errors": {
+      "required": "This field is required.",
+      "email": "Enter a valid email address.",
+      "minMessage": "Please add a little more detail."
+    }
   },
   "contact": {
     "emailLabel": "Email",

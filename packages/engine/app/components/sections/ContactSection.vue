@@ -1,17 +1,45 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import * as v from 'valibot'
 import { useSiteConfig } from '../../composables/useSiteConfig'
+import { useForm } from '../../composables/useForm'
 import type { ContactData } from '../../types/template'
 
 defineProps<{ sectionId: string; data: ContactData }>()
 const { tl } = useSiteConfig()
 const { t } = useI18n()
 
-const submitted = ref(false)
+// Schema = single source of truth. Messages are localized (current locale).
+const schema = v.object({
+  name: v.pipe(v.string(), v.trim(), v.nonEmpty(t('form.errors.required'))),
+  email: v.pipe(
+    v.string(),
+    v.trim(),
+    v.nonEmpty(t('form.errors.required')),
+    v.email(t('form.errors.email')),
+  ),
+  company: v.optional(v.string(), ''),
+  message: v.pipe(
+    v.string(),
+    v.trim(),
+    v.nonEmpty(t('form.errors.required')),
+    v.minLength(10, t('form.errors.minMessage')),
+  ),
+})
+
+const form = useForm(schema, { name: '', email: '', company: '', message: '' })
+const sent = ref(false)
+
 function onSubmit() {
-  // Demo form — does not send anywhere.
-  submitted.value = true
+  sent.value = false
+  const firstInvalid = form.submit(() => {
+    // Demo: no network. A real site would POST here (or to a 3rd-party/serverless endpoint).
+    sent.value = true
+  })
+  if (firstInvalid) {
+    requestAnimationFrame(() => document.getElementById(`c-${firstInvalid}`)?.focus())
+  }
 }
 </script>
 
@@ -64,12 +92,21 @@ function onSubmit() {
               <label for="c-name" class="text-sm font-medium text-text">{{ t('form.name') }}</label>
               <input
                 id="c-name"
+                v-model="form.values.name"
                 type="text"
                 name="name"
                 autocomplete="name"
                 :placeholder="t('form.namePlaceholder')"
                 class="field"
+                :class="{ 'field-invalid': form.errors.name }"
+                :aria-invalid="form.errors.name ? 'true' : undefined"
+                :aria-describedby="form.errors.name ? 'c-name-err' : undefined"
+                @blur="form.onBlur('name')"
+                @input="form.onInput('name')"
               />
+              <p v-if="form.errors.name" id="c-name-err" role="alert" class="field-error">
+                <span aria-hidden="true">⚠</span> {{ form.errors.name }}
+              </p>
             </div>
             <div class="grid gap-1.5">
               <label for="c-email" class="text-sm font-medium text-text">{{
@@ -77,12 +114,21 @@ function onSubmit() {
               }}</label>
               <input
                 id="c-email"
+                v-model="form.values.email"
                 type="email"
                 name="email"
                 autocomplete="email"
                 :placeholder="t('form.emailPlaceholder')"
                 class="field"
+                :class="{ 'field-invalid': form.errors.email }"
+                :aria-invalid="form.errors.email ? 'true' : undefined"
+                :aria-describedby="form.errors.email ? 'c-email-err' : undefined"
+                @blur="form.onBlur('email')"
+                @input="form.onInput('email')"
               />
+              <p v-if="form.errors.email" id="c-email-err" role="alert" class="field-error">
+                <span aria-hidden="true">⚠</span> {{ form.errors.email }}
+              </p>
             </div>
           </div>
           <div class="grid gap-1.5">
@@ -91,6 +137,7 @@ function onSubmit() {
             }}</label>
             <input
               id="c-company"
+              v-model="form.values.company"
               type="text"
               name="company"
               autocomplete="organization"
@@ -104,11 +151,20 @@ function onSubmit() {
             }}</label>
             <textarea
               id="c-message"
+              v-model="form.values.message"
               name="message"
               rows="4"
               :placeholder="t('form.messagePlaceholder')"
               class="field resize-y"
+              :class="{ 'field-invalid': form.errors.message }"
+              :aria-invalid="form.errors.message ? 'true' : undefined"
+              :aria-describedby="form.errors.message ? 'c-message-err' : undefined"
+              @blur="form.onBlur('message')"
+              @input="form.onInput('message')"
             ></textarea>
+            <p v-if="form.errors.message" id="c-message-err" role="alert" class="field-error">
+              <span aria-hidden="true">⚠</span> {{ form.errors.message }}
+            </p>
           </div>
 
           <div class="flex flex-wrap items-center gap-3">
@@ -118,12 +174,7 @@ function onSubmit() {
             <p class="text-xs text-muted">{{ t('form.note') }}</p>
           </div>
 
-          <p
-            v-if="submitted"
-            role="status"
-            class="text-sm font-medium"
-            style="color: var(--accent)"
-          >
+          <p v-if="sent" role="status" class="text-sm font-medium" style="color: var(--accent)">
             ✓ {{ t('form.success') }}
           </p>
         </form>
@@ -149,5 +200,12 @@ function onSubmit() {
 .field:focus {
   outline: none;
   border-color: var(--accent);
+}
+.field-invalid {
+  border-color: var(--danger);
+}
+.field-error {
+  color: var(--danger);
+  font-size: 0.8rem;
 }
 </style>
