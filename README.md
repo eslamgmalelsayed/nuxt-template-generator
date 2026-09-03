@@ -1,4 +1,4 @@
-# Strata — Nuxt Business Site Starter
+# Nuxt Template Generator — Business Site Starter
 
 A production-ready **Nuxt 4 starter** for building fast, SEO-first, bilingual business sites.
 Use it as a **GitHub template** to spin up a fresh, self-contained project per client — edit config,
