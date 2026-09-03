@@ -1,4 +1,4 @@
-import type { ThemeConfig } from '@strata/engine/types'
+import type { ThemeConfig } from '../../layers/engine/types'
 
 /** A deliberately different palette from Rolaco — proves preset-swapping re-skins the site. */
 export const starterTheme: ThemeConfig = {

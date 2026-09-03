@@ -1,4 +1,4 @@
-import type { SiteConfig } from '@strata/engine/types'
+import type { SiteConfig } from '../../layers/engine/types'
 
 /** Neutral blank preset — the base others copy. Proves the engine is not Rolaco-coupled. */
 export const starterConfig: SiteConfig = {

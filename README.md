@@ -1,57 +1,55 @@
-# Strata — Nuxt Business Template Engine
+# Strata — Nuxt Business Site Starter
 
-A config-driven engine for building **many distinct, SEO-first business websites** from one reusable
-core. The engine is a **Nuxt Layer** (`@strata/engine`); each site is a thin app that `extends` it and
-supplies only its **content + theme**. New site = new config + theme, **no component edits**.
+A production-ready **Nuxt 4 starter** for building fast, SEO-first, bilingual business sites.
+Use it as a **GitHub template** to spin up a fresh, self-contained project per client — edit config,
+deploy static, done. The reusable **engine** lives inside as a local Nuxt layer (`layers/engine`), so
+each copy is fully independent (no external package, nothing to maintain centrally).
 
-> Repo: `nuxt-template-generator` · First site built on it: **Rolaco** (Arabian Shutoh & Lights).
-
-## Highlights
+## Features
 
 - **Nuxt 4 + Static SSG** — prerendered HTML for real SEO
-- **Bilingual AR / EN** with full **RTL**, per-site default locale
-- **Dark / light** theming via swappable CSS-variable presets
-- **WCAG 2.1 AA** accessibility baked in
-- **`@nuxtjs/seo`** — sitemap, robots, OG images, schema.org, hreflang
-- **Animated SVG hero** (electric skyline) with reduced-motion + optional 3D slot
-- **Lighthouse quality gate** in CI (Performance / SEO / A11y / Best-Practices)
+- **Bilingual AR / EN** with full **RTL** (per-site default locale)
+- **Dark / light** theming (light default) + animated toggle (View Transitions)
+- **WCAG 2.1 AA** accessibility baseline
+- **SEO stack** (`@nuxtjs/seo`) — sitemap, robots, OG images, schema.org, hreflang
+- **Section variants** + **rich token presets** (shape / density / type scale) — re-skin without touching components
+- **Accessible forms** (Valibot) · **scroll-to-top** · **Cairo** Arabic font
+- **Lighthouse quality gate** in CI (perf floored at 0.85; a11y/SEO must be ≥0.95)
+
+## Create a new client site
+
+1. **Use this template** on GitHub → new repo.
+2. `pnpm install`
+3. Edit **`app/site/config.ts`** (content, per-locale) and **`app/site/theme.ts`** (palette, shape/density/type).
+4. Set your domain in `nuxt.config.ts` (`site.url`) and the default locale.
+5. `pnpm generate` → deploy `.output/public` to any static host (Netlify / Vercel / Cloudflare Pages).
+
+See **`examples/rolaco/`** for a fully-built reference preset.
 
 ## Structure
 
 ```
-packages/engine/     @strata/engine — the reusable Nuxt Layer
-                     (components, composables, types, css, i18n, modules)
-apps/rolaco/         first real site — Arabic-default, blue theme
-apps/starter/        blank neutral base — English-default, green theme
-.github/workflows/   Lighthouse quality gate (both apps)
+app/
+  app.config.ts        # points the engine at this site's config + theme
+  site/{config,theme}.ts   # THE stuff you edit per project
+layers/engine/         # the reusable engine (Nuxt layer) — you rarely touch this
+  app/                 # components, composables, sections + variants, tokens, layout
+  i18n/locales/        # UI-chrome strings
+  types.ts             # SiteConfig / ThemeConfig / Section contracts
+examples/rolaco/       # a complete reference preset
 ```
 
-Each app provides content + theme through `app/app.config.ts` (`{ site, theme }`), read by the engine.
+## Scripts
 
-## Getting started
+| Command                     | What                               |
+| --------------------------- | ---------------------------------- |
+| `pnpm dev`                  | Dev server (http://localhost:3000) |
+| `pnpm generate`             | Static build → `.output/public`    |
+| `pnpm preview`              | Preview the production build       |
+| `pnpm lint` / `pnpm format` | ESLint / Prettier                  |
+| `pnpm test:quality`         | Build + Lighthouse gate            |
 
-Uses **pnpm** workspaces.
+## Add a section variant / new section
 
-```bash
-pnpm install
-pnpm dev:rolaco        # dev server for the Rolaco app
-pnpm gen:rolaco        # static build → apps/rolaco/.output/public
-pnpm dev:starter       # the blank starter
-```
-
-## Add a new business site
-
-1. Copy `apps/starter` → `apps/<name>`
-2. Edit `app/site/{config,theme}.ts` (content + palette) and `app/app.config.ts`
-3. `pnpm --filter <name> dev`
-
-No engine/component changes required.
-
-## Quality gate
-
-Lighthouse runs in CI (`.github/workflows/quality.yml`) on push/PR for every app, and fails if
-Accessibility or SEO drop below 0.95. Run locally on demand:
-
-```bash
-pnpm audit:rolaco      # build + Lighthouse for one app
-```
+Variants live in `layers/engine/app/components/sections/` and are registered in `SectionRenderer.vue`
+(`kind → variant → component`). Pick one per section in `app/site/config.ts` via `variant`.

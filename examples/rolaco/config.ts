@@ -1,4 +1,4 @@
-import type { SiteConfig } from '@strata/engine/types'
+import type { SiteConfig } from '../../layers/engine/types'
 
 /**
  * Rolaco — Arabian Shutoh & Lights (the first business preset).

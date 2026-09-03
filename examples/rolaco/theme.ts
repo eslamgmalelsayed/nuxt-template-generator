@@ -1,4 +1,4 @@
-import type { ThemeConfig } from '@strata/engine/types'
+import type { ThemeConfig } from '../../layers/engine/types'
 
 /**
  * Rolaco theme preset — dark "electric power" aesthetic with a designed light

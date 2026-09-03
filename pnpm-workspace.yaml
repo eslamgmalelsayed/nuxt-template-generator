@@ -1,8 +1,5 @@
-packages:
-  - 'packages/*'
-  - 'apps/*'
-
-# Approve install scripts (pnpm 11 blocks build scripts by default).
+# pnpm 11 reads project settings from here (not package.json's "pnpm" field).
+# Approve the native build scripts Vite/Nuxt + Lefthook need.
 allowBuilds:
   esbuild: true
   lefthook: true
