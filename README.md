@@ -24,8 +24,6 @@ each copy is fully independent (no external package, nothing to maintain central
 4. Set your domain in `nuxt.config.ts` (`site.url`) and the default locale.
 5. `pnpm generate` → deploy `.output/public` to any static host (Netlify / Vercel / Cloudflare Pages).
 
-See **`examples/rolaco/`** for a fully-built reference preset.
-
 ## Structure
 
 ```
@@ -36,7 +34,6 @@ layers/engine/         # the reusable engine (Nuxt layer) — you rarely touch t
   app/                 # components, composables, sections + variants, tokens, layout
   i18n/locales/        # UI-chrome strings
   types.ts             # SiteConfig / ThemeConfig / Section contracts
-examples/rolaco/       # a complete reference preset
 ```
 
 ## Scripts
