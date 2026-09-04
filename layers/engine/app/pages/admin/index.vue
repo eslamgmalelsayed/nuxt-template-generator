@@ -1,14 +1,17 @@
 <script setup lang="ts">
 import { reactive, ref, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useState } from 'nuxt/app'
 import { useSiteConfig } from '../../composables/useSiteConfig'
 import { sectionSchemas } from '../../admin/sectionSchemas'
-import { cleanData, validateFields, defaultForField } from '../../admin/schemaUtils'
+import { cleanData, validateFields, defaultForField, resolveLabel } from '../../admin/schemaUtils'
 import type { SiteConfig, ThemeConfig, SectionComponent } from '../../types/template'
 
 definePageMeta({ layout: 'admin', middleware: 'auth' })
 defineI18nRoute(false)
 
+const { t, locale } = useI18n()
+const loc = computed(() => locale.value as 'en' | 'ar')
 const { config } = useSiteConfig()
 
 // Editable deep clone of the live content (plain JSON → safe to mutate freely).
@@ -23,7 +26,7 @@ const saving = ref(false)
 const saved = ref(false)
 
 function labelFor(kind: string) {
-  return sectionSchemas[kind as keyof typeof sectionSchemas]?.label ?? kind
+  return resolveLabel(sectionSchemas[kind as keyof typeof sectionSchemas]?.label, loc.value) || kind
 }
 
 // --- section management ---
@@ -72,8 +75,9 @@ async function save() {
   const sections = draft.sections.map((s) => {
     const schema = sectionSchemas[s.component]
     if (!schema) return s
-    for (const e of validateFields(schema.fields, s.data as Record<string, unknown>)) {
-      errors.value.push(`${schema.label}: ${e}`)
+    const label = resolveLabel(schema.label, loc.value)
+    for (const e of validateFields(schema.fields, s.data as Record<string, unknown>, loc.value)) {
+      errors.value.push(`${label}: ${e}`)
     }
     return { ...s, data: cleanData(schema.fields, s.data as Record<string, unknown>) }
   })
@@ -97,11 +101,13 @@ async function save() {
 <template>
   <div class="mx-auto max-w-5xl px-6 py-8">
     <div class="mb-6 flex items-center justify-between gap-4">
-      <h1 class="h3 text-text">Content</h1>
+      <h1 class="h3 text-text">{{ t('admin.content') }}</h1>
       <div class="flex items-center gap-3">
-        <span v-if="saved" role="status" class="text-sm" style="color: var(--accent)">✓ Saved</span>
+        <span v-if="saved" role="status" class="text-sm" style="color: var(--accent)"
+          >✓ {{ t('admin.saved') }}</span
+        >
         <button class="btn-primary !min-h-10 !px-6 !py-2" :disabled="saving" @click="save">
-          {{ saving ? 'Saving…' : 'Save changes' }}
+          {{ saving ? t('admin.saving') : t('admin.save') }}
         </button>
       </div>
     </div>
@@ -112,7 +118,7 @@ async function save() {
       class="mb-6 rounded-md border border-[var(--danger)] p-4 text-sm"
       style="color: var(--danger)"
     >
-      <p class="mb-1 font-semibold">Please fix:</p>
+      <p class="mb-1 font-semibold">{{ t('admin.pleaseFix') }}</p>
       <ul class="list-inside list-disc">
         <li v-for="(e, i) in errors" :key="i">{{ e }}</li>
       </ul>
@@ -133,7 +139,7 @@ async function save() {
           @click="selected = i"
         >
           <span>{{ labelFor(s.component) }}</span>
-          <span v-if="s.enabled === false" class="text-xs opacity-70">hidden</span>
+          <span v-if="s.enabled === false" class="text-xs opacity-70">{{ t('admin.hidden') }}</span>
         </button>
 
         <div class="mt-3 flex gap-1 border-t border-border pt-3">
@@ -142,7 +148,7 @@ async function save() {
           </select>
           <button
             class="rounded-md border border-border px-3 text-sm text-text hover:border-accent"
-            title="Add section"
+            :title="t('admin.addSection')"
             @click="addSection"
           >
             +
@@ -153,9 +159,11 @@ async function save() {
       <!-- Editor for the selected section -->
       <section v-if="currentSchema" class="min-w-0">
         <div class="mb-5 flex flex-wrap items-center gap-3">
-          <h2 class="text-lg font-semibold text-text">{{ currentSchema.label }}</h2>
+          <h2 class="text-lg font-semibold text-text">
+            {{ resolveLabel(currentSchema.label, loc) }}
+          </h2>
           <label v-if="currentSchema.variants" class="flex items-center gap-2 text-sm text-muted">
-            Layout
+            {{ t('admin.layout') }}
             <select v-model="current.variant" class="af-inline">
               <option v-for="v in currentSchema.variants" :key="v.value" :value="v.value">
                 {{ v.label }}
@@ -170,12 +178,12 @@ async function save() {
                 :checked="current.enabled !== false"
                 @change="current.enabled = ($event.target as HTMLInputElement).checked"
               />
-              Visible
+              {{ t('admin.visible') }}
             </label>
             <button
               class="rounded border border-border px-2 py-1 text-muted enabled:hover:text-text disabled:opacity-40"
               :disabled="selected === 0"
-              title="Move up"
+              :title="t('admin.moveUp')"
               @click="moveSection(selected, -1)"
             >
               ↑
@@ -183,17 +191,17 @@ async function save() {
             <button
               class="rounded border border-border px-2 py-1 text-muted enabled:hover:text-text disabled:opacity-40"
               :disabled="selected === draft.sections.length - 1"
-              title="Move down"
+              :title="t('admin.moveDown')"
               @click="moveSection(selected, 1)"
             >
               ↓
             </button>
             <button
               class="px-1 text-[var(--danger)]"
-              title="Delete section"
+              :title="t('admin.deleteSection')"
               @click="removeSection(selected)"
             >
-              Delete
+              {{ t('admin.delete') }}
             </button>
           </div>
         </div>
@@ -203,7 +211,9 @@ async function save() {
           :model="current.data as Record<string, unknown>"
         />
       </section>
-      <section v-else class="text-sm text-muted">No editor for “{{ current.component }}”.</section>
+      <section v-else class="text-sm text-muted">
+        {{ t('admin.noEditor') }} “{{ current.component }}”.
+      </section>
     </div>
   </div>
 </template>

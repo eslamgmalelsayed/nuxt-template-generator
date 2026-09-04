@@ -5,8 +5,11 @@
 // the `container()` helper / computed setters, keeping the prop binding itself
 // untouched.
 import { computed, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import type { Field } from '../../types/schema'
-import { defaultForField } from '../../admin/schemaUtils'
+import { defaultForField, resolveLabel } from '../../admin/schemaUtils'
+
+const { locale, t } = useI18n()
 
 const props = defineProps<{
   field: Field
@@ -22,13 +25,13 @@ type Any = Record<string, unknown> & { en?: string; ar?: string }
 function container(): Record<string | number, unknown> {
   return props.parent as unknown as Record<string | number, unknown>
 }
-const t = props.field.type
+const ftype = props.field.type
 if (
   container()[props.pkey] == null &&
-  (t === 'localized' ||
-    t === 'localized-multiline' ||
-    t === 'array' ||
-    (t === 'group' && !props.field.optional))
+  (ftype === 'localized' ||
+    ftype === 'localized-multiline' ||
+    ftype === 'array' ||
+    (ftype === 'group' && !props.field.optional))
 ) {
   container()[props.pkey] = defaultForField(props.field)
 }
@@ -63,6 +66,16 @@ const isLocalized = computed(
   () => props.field.type === 'localized' || props.field.type === 'localized-multiline',
 )
 
+// Localized label resolution against the current dashboard language.
+const loc = computed(() => locale.value as 'en' | 'ar')
+const label = computed(() => resolveLabel(props.field.label, loc.value))
+const help = computed(() => resolveLabel(props.field.help, loc.value))
+const itemLabel = computed(() =>
+  props.field.type === 'array'
+    ? resolveLabel(props.field.itemLabel, loc.value) || t('admin.item')
+    : t('admin.item'),
+)
+
 // Image upload
 const uploading = ref(false)
 const uploadError = ref('')
@@ -89,11 +102,11 @@ async function onUpload(e: Event) {
 
 <template>
   <div class="grid gap-1.5">
-    <label v-if="field.label" class="text-sm font-medium text-text">
-      {{ field.label }}
+    <label v-if="label" class="text-sm font-medium text-text">
+      {{ label }}
       <span v-if="!field.optional" aria-hidden="true" class="text-[var(--danger)]">*</span>
     </label>
-    <p v-if="field.help" class="-mt-1 text-xs text-muted">{{ field.help }}</p>
+    <p v-if="help" class="-mt-1 text-xs text-muted">{{ help }}</p>
 
     <!-- localized single / multiline: EN + AR pair -->
     <div v-if="isLocalized" class="grid gap-2 sm:grid-cols-2">
@@ -170,11 +183,11 @@ async function onUpload(e: Event) {
         <label
           class="cursor-pointer rounded-md border border-border px-3 py-1.5 text-sm text-text hover:border-accent"
         >
-          {{ uploading ? 'Uploading…' : 'Upload image' }}
+          {{ uploading ? t('admin.uploading') : t('admin.uploadImage') }}
           <input type="file" accept="image/*" class="hidden" @change="onUpload" />
         </label>
         <button v-if="model" type="button" class="text-xs text-[var(--danger)]" @click="model = ''">
-          Remove
+          {{ t('admin.remove') }}
         </button>
       </div>
       <input v-model="model" type="text" placeholder="/uploads/…" class="af font-mono text-xs" />
@@ -189,12 +202,12 @@ async function onUpload(e: Event) {
         class="rounded-md border border-dashed border-border px-3 py-2 text-sm text-muted hover:border-accent hover:text-text"
         @click="addGroup"
       >
-        + Add {{ field.label }}
+        + {{ t('admin.add') }} {{ label }}
       </button>
       <fieldset v-else class="rounded-md border border-border p-4">
         <div v-if="field.optional" class="mb-3 flex justify-end">
           <button type="button" class="text-xs text-[var(--danger)]" @click="removeGroup">
-            Remove
+            {{ t('admin.remove') }}
           </button>
         </div>
         <AdminSchemaForm :fields="field.fields" :model="obj" />
@@ -206,10 +219,10 @@ async function onUpload(e: Event) {
       <div v-for="(_, i) in list" :key="i" class="rounded-md border border-border p-4">
         <div class="mb-2 flex items-center justify-between">
           <span class="text-xs font-semibold uppercase tracking-wide text-muted">
-            {{ field.itemLabel ?? 'Item' }} {{ i + 1 }}
+            {{ itemLabel }} {{ i + 1 }}
           </span>
           <button type="button" class="text-xs text-[var(--danger)]" @click="removeItem(i)">
-            Remove
+            {{ t('admin.remove') }}
           </button>
         </div>
         <AdminFieldControl :field="field.item" :parent="list" :pkey="i" />
@@ -219,7 +232,7 @@ async function onUpload(e: Event) {
         class="justify-self-start rounded-md border border-border px-3 py-1.5 text-sm text-text hover:border-accent"
         @click="addItem"
       >
-        + Add {{ field.itemLabel ?? 'item' }}
+        + {{ t('admin.add') }} {{ itemLabel }}
       </button>
     </div>
 

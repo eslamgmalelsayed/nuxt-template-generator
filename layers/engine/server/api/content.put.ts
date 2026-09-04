@@ -2,7 +2,7 @@ import type { SiteConfig, ThemeConfig, Section } from '../../app/types/template'
 import { sectionSchemas } from '../../app/admin/sectionSchemas'
 import { themeSchema } from '../../app/admin/themeSchema'
 import { siteSchema } from '../../app/admin/siteSchema'
-import { cleanData, validateFields } from '../../app/admin/schemaUtils'
+import { cleanData, validateFields, resolveLabel } from '../../app/admin/schemaUtils'
 
 /**
  * Saves edited content and/or theme (dashboard → DB). Auth-protected.
@@ -50,7 +50,8 @@ function validateAndCleanSite(site: SiteConfig): SiteConfig {
     const schema = sectionSchemas[s.component]
     if (!schema) return s
     const data = (s.data ?? {}) as Record<string, unknown>
-    for (const e of validateFields(schema.fields, data)) errors.push(`${schema.label}: ${e}`)
+    const label = resolveLabel(schema.label)
+    for (const e of validateFields(schema.fields, data)) errors.push(`${label}: ${e}`)
     return { ...s, data: cleanData(schema.fields, data) }
   })
 

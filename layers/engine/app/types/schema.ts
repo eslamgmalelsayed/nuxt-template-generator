@@ -7,7 +7,10 @@
  * Add a new section kind = add a component (render) + a SectionSchema (edit).
  * No bespoke form code.
  */
-import type { SectionComponent } from './template'
+import type { SectionComponent, Localized } from './template'
+
+/** A UI label — a plain string, or localized { en, ar } resolved by the dashboard. */
+export type LabelText = string | Localized
 
 export type FieldType =
   | 'text' // plain single-line string
@@ -25,11 +28,11 @@ export type FieldType =
 interface FieldCommon {
   /** property key within the section's data object (empty for array items) */
   key: string
-  /** human label shown in the dashboard */
-  label?: string
+  /** human label shown in the dashboard (string or localized) */
+  label?: LabelText
   optional?: boolean
   /** short helper text under the control */
-  help?: string
+  help?: LabelText
   /** value used when creating this field (e.g. a boolean that defaults true) */
   default?: unknown
 }
@@ -50,7 +53,7 @@ export interface ArrayField extends FieldCommon {
   /** shape of each element (a group for object items, or a simple field) */
   item: Field
   /** singular label for the add button / item headings, e.g. "Service" */
-  itemLabel?: string
+  itemLabel?: LabelText
   min?: number
   max?: number
 }
@@ -65,7 +68,7 @@ export type Field = SimpleField | SelectField | ArrayField | GroupField
 export interface SectionSchema {
   kind: SectionComponent
   /** label for the section in the dashboard, e.g. "Hero" */
-  label: string
+  label: LabelText
   /** selectable layout variants (maps to Section.variant) */
   variants?: { value: string; label: string }[]
   /** the shape of Section.data */

@@ -2,9 +2,28 @@
  * Pure helpers shared by the dashboard forms and the server validator, so both
  * derive from the same section schemas (types/schema.ts, sectionSchemas.ts).
  */
-import type { Field } from '../types/schema'
+import type { Field, LabelText } from '../types/schema'
 
 type Dict = Record<string, unknown>
+type Locale = 'en' | 'ar'
+
+/** Resolves a label (string or localized) against the dashboard locale. */
+export function resolveLabel(label: LabelText | undefined, locale: Locale = 'en'): string {
+  if (!label) return ''
+  if (typeof label === 'string') return label
+  return label[locale] ?? label.en ?? ''
+}
+
+const V_MSG: Record<Locale, { required: (l: string) => string; min: (l: string) => string }> = {
+  en: {
+    required: (l) => `${l} is required`,
+    min: (l) => `${l} needs at least one entry`,
+  },
+  ar: {
+    required: (l) => `${l} مطلوب`,
+    min: (l) => `${l} يحتاج إلى إدخال واحد على الأقل`,
+  },
+}
 
 export function emptyLocalized() {
   return { en: '', ar: '' }
@@ -98,18 +117,26 @@ export function cleanData(fields: Field[], data: Dict): Dict {
   return out
 }
 
-/** Collects human-readable errors for required-but-empty fields. */
-export function validateFields(fields: Field[], data: Dict, path = ''): string[] {
+/** Collects human-readable (localized) errors for required-but-empty fields. */
+export function validateFields(
+  fields: Field[],
+  data: Dict,
+  locale: Locale = 'en',
+  path = '',
+): string[] {
   const errors: string[] = []
+  const msg = V_MSG[locale] ?? V_MSG.en
+
   for (const field of fields) {
     const value = data?.[field.key]
-    const label = path ? `${path} › ${field.label ?? field.key}` : (field.label ?? field.key)
+    const base = resolveLabel(field.label, locale) || field.key
+    const label = path ? `${path} › ${base}` : base
 
     if (field.type === 'group') {
       if (!field.optional && isEmptyValue(field, value)) {
-        errors.push(`${label} is required`)
+        errors.push(msg.required(label))
       } else if (value) {
-        errors.push(...validateFields(field.fields, value as Dict, label))
+        errors.push(...validateFields(field.fields, value as Dict, locale, label))
       }
       continue
     }
@@ -117,20 +144,22 @@ export function validateFields(fields: Field[], data: Dict, path = ''): string[]
     if (field.type === 'array') {
       const items = Array.isArray(value) ? value : []
       if (!field.optional && items.length === 0) {
-        errors.push(`${label} needs at least one entry`)
+        errors.push(msg.min(label))
       }
       items.forEach((item, i) => {
         if (field.item.type === 'group') {
-          errors.push(...validateFields(field.item.fields, item as Dict, `${label} #${i + 1}`))
+          errors.push(
+            ...validateFields(field.item.fields, item as Dict, locale, `${label} #${i + 1}`),
+          )
         } else if (!field.item.optional && isEmptyValue(field.item, item)) {
-          errors.push(`${label} #${i + 1} is required`)
+          errors.push(msg.required(`${label} #${i + 1}`))
         }
       })
       continue
     }
 
     if (!field.optional && isEmptyValue(field, value)) {
-      errors.push(`${label} is required`)
+      errors.push(msg.required(label))
     }
   }
   return errors

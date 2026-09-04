@@ -2,19 +2,24 @@
  * The editing schema for every section kind. Mirrors the data shapes in
  * types/template.ts, but as runtime descriptors so the dashboard can generate
  * forms and the server can validate — from one source. Keyed by the same
- * SectionComponent names the render registry uses.
+ * SectionComponent names the render registry uses. Labels are localized (en/ar)
+ * so the dashboard renders in either language.
  */
 import type { Field, SectionSchema, SectionSchemaRegistry } from '../types/schema'
+import type { Localized } from '../types/template'
+
+/** Compact localized-label helper. */
+const L = (en: string, ar: string): Localized => ({ en, ar })
 
 const ICON_OPTIONS = ['bolt', 'bulb', 'grid', 'shield', 'cpu', 'chart']
 
 /** Reusable CTA group ({ label, to, variant }). */
 const ctaFields: Field[] = [
-  { key: 'label', label: 'Label', type: 'localized' },
-  { key: 'to', label: 'Link', type: 'text', placeholder: '#contact' },
+  { key: 'label', label: L('Label', 'التسمية'), type: 'localized' },
+  { key: 'to', label: L('Link', 'الرابط'), type: 'text', placeholder: '#contact' },
   {
     key: 'variant',
-    label: 'Style',
+    label: L('Style', 'النمط'),
     type: 'select',
     optional: true,
     options: [
@@ -26,40 +31,50 @@ const ctaFields: Field[] = [
 
 const hero: SectionSchema = {
   kind: 'HeroSection',
-  label: 'Hero',
+  label: L('Hero', 'الواجهة'),
   variants: [
     { value: 'default', label: 'Default' },
     { value: 'centered', label: 'Centered' },
   ],
   fields: [
-    { key: 'eyebrow', label: 'Eyebrow', type: 'localized', optional: true },
-    { key: 'title', label: 'Title', type: 'localized' },
-    { key: 'titleAccent', label: 'Title accent', type: 'localized', optional: true },
-    { key: 'subtitle', label: 'Subtitle', type: 'localized-multiline', optional: true },
+    { key: 'eyebrow', label: L('Eyebrow', 'تمهيد'), type: 'localized', optional: true },
+    { key: 'title', label: L('Title', 'العنوان'), type: 'localized' },
+    {
+      key: 'titleAccent',
+      label: L('Title accent', 'تمييز العنوان'),
+      type: 'localized',
+      optional: true,
+    },
+    {
+      key: 'subtitle',
+      label: L('Subtitle', 'العنوان الفرعي'),
+      type: 'localized-multiline',
+      optional: true,
+    },
     {
       key: 'ctas',
-      label: 'Call-to-action buttons',
+      label: L('Call-to-action buttons', 'أزرار الإجراء'),
       type: 'array',
-      itemLabel: 'Button',
+      itemLabel: L('Button', 'زر'),
       optional: true,
       item: { key: '', type: 'group', fields: ctaFields },
     },
     {
       key: 'media',
-      label: 'Hero media',
+      label: L('Hero media', 'وسائط الواجهة'),
       type: 'group',
       optional: true,
       fields: [
         {
           key: 'type',
-          label: 'Type',
+          label: L('Type', 'النوع'),
           type: 'select',
           options: [
             { value: 'svg', label: 'Animated SVG' },
             { value: '3d', label: '3D' },
           ],
         },
-        { key: 'variant', label: 'Variant', type: 'text', optional: true },
+        { key: 'variant', label: L('Variant', 'النمط'), type: 'text', optional: true },
       ],
     },
   ],
@@ -67,25 +82,31 @@ const hero: SectionSchema = {
 
 const stats: SectionSchema = {
   kind: 'StatsSection',
-  label: 'Stats',
+  label: L('Stats', 'الإحصائيات'),
   variants: [
     { value: 'default', label: 'Default' },
     { value: 'banded', label: 'Banded' },
   ],
   fields: [
-    { key: 'heading', label: 'Heading', type: 'localized', optional: true },
+    { key: 'heading', label: L('Heading', 'العنوان'), type: 'localized', optional: true },
     {
       key: 'items',
-      label: 'Stats',
+      label: L('Stats', 'الإحصائيات'),
       type: 'array',
-      itemLabel: 'Stat',
+      itemLabel: L('Stat', 'إحصائية'),
       item: {
         key: '',
         type: 'group',
         fields: [
-          { key: 'value', label: 'Value', type: 'number' },
-          { key: 'suffix', label: 'Suffix', type: 'text', optional: true, placeholder: '+' },
-          { key: 'label', label: 'Label', type: 'localized' },
+          { key: 'value', label: L('Value', 'القيمة'), type: 'number' },
+          {
+            key: 'suffix',
+            label: L('Suffix', 'لاحقة'),
+            type: 'text',
+            optional: true,
+            placeholder: '+',
+          },
+          { key: 'label', label: L('Label', 'التسمية'), type: 'localized' },
         ],
       },
     },
@@ -94,26 +115,26 @@ const stats: SectionSchema = {
 
 const about: SectionSchema = {
   kind: 'AboutSection',
-  label: 'About',
+  label: L('About', 'نبذة'),
   variants: [
     { value: 'default', label: 'Default' },
     { value: 'stacked', label: 'Stacked' },
   ],
   fields: [
-    { key: 'eyebrow', label: 'Eyebrow', type: 'localized', optional: true },
-    { key: 'heading', label: 'Heading', type: 'localized' },
+    { key: 'eyebrow', label: L('Eyebrow', 'تمهيد'), type: 'localized', optional: true },
+    { key: 'heading', label: L('Heading', 'العنوان'), type: 'localized' },
     {
       key: 'body',
-      label: 'Paragraphs',
+      label: L('Paragraphs', 'الفقرات'),
       type: 'array',
-      itemLabel: 'Paragraph',
+      itemLabel: L('Paragraph', 'فقرة'),
       item: { key: '', type: 'localized-multiline' },
     },
     {
       key: 'highlights',
-      label: 'Highlights',
+      label: L('Highlights', 'النقاط المميزة'),
       type: 'array',
-      itemLabel: 'Highlight',
+      itemLabel: L('Highlight', 'نقطة'),
       optional: true,
       item: { key: '', type: 'localized' },
     },
@@ -122,32 +143,32 @@ const about: SectionSchema = {
 
 const services: SectionSchema = {
   kind: 'ServicesSection',
-  label: 'Services',
+  label: L('Services', 'الخدمات'),
   variants: [
     { value: 'default', label: 'Default' },
     { value: 'rows', label: 'Rows' },
   ],
   fields: [
-    { key: 'eyebrow', label: 'Eyebrow', type: 'localized', optional: true },
-    { key: 'heading', label: 'Heading', type: 'localized' },
-    { key: 'intro', label: 'Intro', type: 'localized-multiline', optional: true },
+    { key: 'eyebrow', label: L('Eyebrow', 'تمهيد'), type: 'localized', optional: true },
+    { key: 'heading', label: L('Heading', 'العنوان'), type: 'localized' },
+    { key: 'intro', label: L('Intro', 'مقدمة'), type: 'localized-multiline', optional: true },
     {
       key: 'items',
-      label: 'Services',
+      label: L('Services', 'الخدمات'),
       type: 'array',
-      itemLabel: 'Service',
+      itemLabel: L('Service', 'خدمة'),
       item: {
         key: '',
         type: 'group',
         fields: [
           {
             key: 'icon',
-            label: 'Icon',
+            label: L('Icon', 'أيقونة'),
             type: 'select',
             options: ICON_OPTIONS.map((v) => ({ value: v, label: v })),
           },
-          { key: 'title', label: 'Title', type: 'localized' },
-          { key: 'description', label: 'Description', type: 'localized-multiline' },
+          { key: 'title', label: L('Title', 'العنوان'), type: 'localized' },
+          { key: 'description', label: L('Description', 'الوصف'), type: 'localized-multiline' },
         ],
       },
     },
@@ -156,27 +177,27 @@ const services: SectionSchema = {
 
 const projects: SectionSchema = {
   kind: 'ProjectsSection',
-  label: 'Projects',
+  label: L('Projects', 'المشاريع'),
   variants: [
     { value: 'default', label: 'Default' },
     { value: 'list', label: 'List' },
   ],
   fields: [
-    { key: 'eyebrow', label: 'Eyebrow', type: 'localized', optional: true },
-    { key: 'heading', label: 'Heading', type: 'localized' },
-    { key: 'intro', label: 'Intro', type: 'localized-multiline', optional: true },
+    { key: 'eyebrow', label: L('Eyebrow', 'تمهيد'), type: 'localized', optional: true },
+    { key: 'heading', label: L('Heading', 'العنوان'), type: 'localized' },
+    { key: 'intro', label: L('Intro', 'مقدمة'), type: 'localized-multiline', optional: true },
     {
       key: 'items',
-      label: 'Projects',
+      label: L('Projects', 'المشاريع'),
       type: 'array',
-      itemLabel: 'Project',
+      itemLabel: L('Project', 'مشروع'),
       item: {
         key: '',
         type: 'group',
         fields: [
-          { key: 'title', label: 'Title', type: 'localized' },
-          { key: 'category', label: 'Category', type: 'localized' },
-          { key: 'image', label: 'Image', type: 'image', optional: true },
+          { key: 'title', label: L('Title', 'العنوان'), type: 'localized' },
+          { key: 'category', label: L('Category', 'الفئة'), type: 'localized' },
+          { key: 'image', label: L('Image', 'صورة'), type: 'image', optional: true },
         ],
       },
     },
@@ -185,25 +206,25 @@ const projects: SectionSchema = {
 
 const partners: SectionSchema = {
   kind: 'PartnersSection',
-  label: 'Partners',
+  label: L('Partners', 'الشركاء'),
   variants: [
     { value: 'default', label: 'Default' },
     { value: 'marquee', label: 'Marquee' },
   ],
   fields: [
-    { key: 'eyebrow', label: 'Eyebrow', type: 'localized', optional: true },
-    { key: 'heading', label: 'Heading', type: 'localized', optional: true },
+    { key: 'eyebrow', label: L('Eyebrow', 'تمهيد'), type: 'localized', optional: true },
+    { key: 'heading', label: L('Heading', 'العنوان'), type: 'localized', optional: true },
     {
       key: 'logos',
-      label: 'Logos',
+      label: L('Logos', 'الشعارات'),
       type: 'array',
-      itemLabel: 'Logo',
+      itemLabel: L('Logo', 'شعار'),
       item: {
         key: '',
         type: 'group',
         fields: [
-          { key: 'name', label: 'Name', type: 'text' },
-          { key: 'src', label: 'Image', type: 'image', optional: true },
+          { key: 'name', label: L('Name', 'الاسم'), type: 'text' },
+          { key: 'src', label: L('Image', 'صورة'), type: 'image', optional: true },
         ],
       },
     },
@@ -212,15 +233,15 @@ const partners: SectionSchema = {
 
 const contact: SectionSchema = {
   kind: 'ContactSection',
-  label: 'Contact',
+  label: L('Contact', 'تواصل'),
   fields: [
-    { key: 'eyebrow', label: 'Eyebrow', type: 'localized', optional: true },
-    { key: 'heading', label: 'Heading', type: 'localized' },
-    { key: 'intro', label: 'Intro', type: 'localized-multiline', optional: true },
-    { key: 'email', label: 'Email', type: 'text' },
-    { key: 'phone', label: 'Phone', type: 'text' },
-    { key: 'address', label: 'Address', type: 'localized' },
-    { key: 'cta', label: 'Button', type: 'group', optional: true, fields: ctaFields },
+    { key: 'eyebrow', label: L('Eyebrow', 'تمهيد'), type: 'localized', optional: true },
+    { key: 'heading', label: L('Heading', 'العنوان'), type: 'localized' },
+    { key: 'intro', label: L('Intro', 'مقدمة'), type: 'localized-multiline', optional: true },
+    { key: 'email', label: L('Email', 'البريد الإلكتروني'), type: 'text' },
+    { key: 'phone', label: L('Phone', 'الهاتف'), type: 'text' },
+    { key: 'address', label: L('Address', 'العنوان'), type: 'localized' },
+    { key: 'cta', label: L('Button', 'زر'), type: 'group', optional: true, fields: ctaFields },
   ],
 }
 

@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { navigateTo } from 'nuxt/app'
 import { useUserSession } from '#imports'
 
 definePageMeta({ layout: 'admin' })
 defineI18nRoute(false) // dashboard is not localized
 
+const { t } = useI18n()
 const { loggedIn, fetch: refreshSession } = useUserSession()
 
 // Already signed in → skip the login screen.
@@ -30,7 +32,7 @@ async function onSubmit() {
     await navigateTo('/admin')
   } catch (e: unknown) {
     const err = e as { data?: { statusMessage?: string }; statusMessage?: string }
-    error.value = err?.data?.statusMessage || err?.statusMessage || 'Sign in failed'
+    error.value = err?.data?.statusMessage || err?.statusMessage || t('admin.signInFailed')
   } finally {
     pending.value = false
   }
@@ -40,12 +42,12 @@ async function onSubmit() {
 <template>
   <div class="grid min-h-screen place-items-center px-6">
     <div class="w-full max-w-sm">
-      <h1 class="h3 text-text">Dashboard</h1>
-      <p class="mt-1 text-sm text-muted">Sign in to manage your site content.</p>
+      <h1 class="h3 text-text">{{ t('admin.dashboard') }}</h1>
+      <p class="mt-1 text-sm text-muted">{{ t('admin.signInIntro') }}</p>
 
       <form class="mt-8 grid gap-4" novalidate @submit.prevent="onSubmit">
         <div class="grid gap-1.5">
-          <label for="email" class="text-sm font-medium text-text">Email</label>
+          <label for="email" class="text-sm font-medium text-text">{{ t('admin.email') }}</label>
           <input
             id="email"
             v-model="email"
@@ -57,7 +59,9 @@ async function onSubmit() {
           />
         </div>
         <div class="grid gap-1.5">
-          <label for="password" class="text-sm font-medium text-text">Password</label>
+          <label for="password" class="text-sm font-medium text-text">{{
+            t('admin.password')
+          }}</label>
           <input
             id="password"
             v-model="password"
@@ -74,7 +78,7 @@ async function onSubmit() {
         </p>
 
         <button type="submit" class="btn-primary mt-2" :disabled="pending">
-          {{ pending ? 'Signing in…' : 'Sign in' }}
+          {{ pending ? t('admin.signingIn') : t('admin.signIn') }}
         </button>
       </form>
     </div>

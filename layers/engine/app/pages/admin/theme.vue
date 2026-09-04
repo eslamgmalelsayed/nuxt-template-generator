@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { reactive, ref, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useState } from 'nuxt/app'
 import { useSiteConfig } from '../../composables/useSiteConfig'
 import { themeSchema, themePresetDefaults } from '../../admin/themeSchema'
@@ -9,6 +10,8 @@ import type { SiteConfig, ThemeConfig, ThemePalette } from '../../types/template
 definePageMeta({ layout: 'admin', middleware: 'auth' })
 defineI18nRoute(false)
 
+const { t, locale } = useI18n()
+const loc = computed(() => locale.value as 'en' | 'ar')
 const { theme } = useSiteConfig()
 
 // Editable clone; fill preset defaults so the selects reflect the real theme.
@@ -44,7 +47,7 @@ const saving = ref(false)
 const saved = ref(false)
 
 async function save() {
-  errors.value = validateFields(themeSchema, draft as unknown as Record<string, unknown>)
+  errors.value = validateFields(themeSchema, draft as unknown as Record<string, unknown>, loc.value)
   saved.value = false
   if (errors.value.length) return
 
@@ -66,11 +69,13 @@ async function save() {
 <template>
   <div class="mx-auto max-w-5xl px-6 py-8">
     <div class="mb-6 flex items-center justify-between gap-4">
-      <h1 class="h3 text-text">Theme</h1>
+      <h1 class="h3 text-text">{{ t('admin.theme') }}</h1>
       <div class="flex items-center gap-3">
-        <span v-if="saved" role="status" class="text-sm" style="color: var(--accent)">✓ Saved</span>
+        <span v-if="saved" role="status" class="text-sm" style="color: var(--accent)"
+          >✓ {{ t('admin.saved') }}</span
+        >
         <button class="btn-primary !min-h-10 !px-6 !py-2" :disabled="saving" @click="save">
-          {{ saving ? 'Saving…' : 'Save theme' }}
+          {{ saving ? t('admin.saving') : t('admin.saveTheme') }}
         </button>
       </div>
     </div>
@@ -81,7 +86,7 @@ async function save() {
       class="mb-6 rounded-md border border-[var(--danger)] p-4 text-sm"
       style="color: var(--danger)"
     >
-      <p class="mb-1 font-semibold">Please fix:</p>
+      <p class="mb-1 font-semibold">{{ t('admin.pleaseFix') }}</p>
       <ul class="list-inside list-disc">
         <li v-for="(e, i) in errors" :key="i">{{ e }}</li>
       </ul>
@@ -98,21 +103,21 @@ async function save() {
       <!-- Live preview -->
       <aside class="md:sticky md:top-20 md:self-start">
         <div class="mb-2 flex items-center gap-2 text-sm">
-          <span class="text-muted">Preview</span>
+          <span class="text-muted">{{ t('admin.preview') }}</span>
           <div class="ms-auto inline-flex overflow-hidden rounded-md border border-border">
             <button
               class="px-3 py-1"
               :class="previewMode === 'light' ? 'bg-accent text-white' : 'text-muted'"
               @click="previewMode = 'light'"
             >
-              Light
+              {{ t('admin.light') }}
             </button>
             <button
               class="px-3 py-1"
               :class="previewMode === 'dark' ? 'bg-accent text-white' : 'text-muted'"
               @click="previewMode = 'dark'"
             >
-              Dark
+              {{ t('admin.dark') }}
             </button>
           </div>
         </div>

@@ -1,61 +1,80 @@
 /**
  * Editing schema for the site-level fields of SiteConfig — everything EXCEPT
  * `sections` (edited on the Content page) and `key` (immutable). Same descriptor
- * system, so the Site page and its validation come from one source too.
+ * system, so the Site page and its validation come from one source too. Labels
+ * are localized (en/ar) for the bilingual dashboard.
  */
 import type { Field } from '../types/schema'
+import type { Localized } from '../types/template'
+
+const L = (en: string, ar: string): Localized => ({ en, ar })
 
 const navItemFields: Field[] = [
-  { key: 'label', label: 'Label', type: 'localized' },
-  { key: 'to', label: 'Link', type: 'text', placeholder: '#about' },
+  { key: 'label', label: L('Label', 'التسمية'), type: 'localized' },
+  { key: 'to', label: L('Link', 'الرابط'), type: 'text', placeholder: '#about' },
 ]
 
 export const siteSchema: Field[] = [
   {
     key: 'brand',
-    label: 'Brand',
+    label: L('Brand', 'العلامة التجارية'),
     type: 'group',
     fields: [
-      { key: 'name', label: 'Name', type: 'text' },
-      { key: 'subBrand', label: 'Sub-brand', type: 'text', optional: true },
-      { key: 'tagline', label: 'Tagline', type: 'localized', optional: true },
-      { key: 'logo', label: 'Logo', type: 'image', optional: true },
+      { key: 'name', label: L('Name', 'الاسم'), type: 'text' },
+      { key: 'subBrand', label: L('Sub-brand', 'الاسم الفرعي'), type: 'text', optional: true },
+      {
+        key: 'tagline',
+        label: L('Tagline', 'العبارة التعريفية'),
+        type: 'localized',
+        optional: true,
+      },
+      { key: 'logo', label: L('Logo', 'الشعار'), type: 'image', optional: true },
     ],
   },
   {
     key: 'nav',
-    label: 'Navigation links',
+    label: L('Navigation links', 'روابط التنقل'),
     type: 'array',
-    itemLabel: 'Link',
+    itemLabel: L('Link', 'رابط'),
     item: { key: '', type: 'group', fields: navItemFields },
   },
   {
     key: 'seo',
-    label: 'SEO',
+    label: L('SEO', 'تحسين محركات البحث'),
     type: 'group',
     fields: [
-      { key: 'title', label: 'Title', type: 'localized' },
-      { key: 'description', label: 'Description', type: 'localized-multiline' },
-      { key: 'ogImage', label: 'Social share image', type: 'image', optional: true },
+      { key: 'title', label: L('Title', 'العنوان'), type: 'localized' },
+      { key: 'description', label: L('Description', 'الوصف'), type: 'localized-multiline' },
+      {
+        key: 'ogImage',
+        label: L('Social share image', 'صورة المشاركة'),
+        type: 'image',
+        optional: true,
+      },
     ],
   },
   {
     key: 'organization',
-    label: 'Organization (schema.org)',
+    label: L('Organization (schema.org)', 'المنظمة'),
     type: 'group',
     fields: [
-      { key: 'legalName', label: 'Legal name', type: 'text' },
-      { key: 'foundingYear', label: 'Founding year', type: 'number' },
-      { key: 'logo', label: 'Logo', type: 'image', optional: true },
-      { key: 'addressLocality', label: 'City', type: 'text' },
-      { key: 'addressCountry', label: 'Country code', type: 'text', placeholder: 'SA' },
-      { key: 'email', label: 'Email', type: 'text' },
-      { key: 'phone', label: 'Phone', type: 'text' },
+      { key: 'legalName', label: L('Legal name', 'الاسم القانوني'), type: 'text' },
+      { key: 'foundingYear', label: L('Founding year', 'سنة التأسيس'), type: 'number' },
+      { key: 'logo', label: L('Logo', 'الشعار'), type: 'image', optional: true },
+      { key: 'addressLocality', label: L('City', 'المدينة'), type: 'text' },
+      {
+        key: 'addressCountry',
+        label: L('Country code', 'رمز الدولة'),
+        type: 'text',
+        placeholder: 'SA',
+      },
+      { key: 'email', label: L('Email', 'البريد الإلكتروني'), type: 'text' },
+      { key: 'phone', label: L('Phone', 'الهاتف'), type: 'text' },
       {
         key: 'sameAs',
-        label: 'Social profile URLs',
+        label: L('Social profile URLs', 'روابط التواصل الاجتماعي'),
         type: 'array',
-        itemLabel: 'URL',
+        itemLabel: L('URL', 'رابط'),
         optional: true,
         item: { key: '', type: 'text', placeholder: 'https://…' },
       },
@@ -63,27 +82,27 @@ export const siteSchema: Field[] = [
   },
   {
     key: 'footer',
-    label: 'Footer',
+    label: L('Footer', 'التذييل'),
     type: 'group',
     optional: true,
     fields: [
-      { key: 'note', label: 'Note', type: 'localized', optional: true },
+      { key: 'note', label: L('Note', 'ملاحظة'), type: 'localized', optional: true },
       {
         key: 'columns',
-        label: 'Columns',
+        label: L('Columns', 'الأعمدة'),
         type: 'array',
-        itemLabel: 'Column',
+        itemLabel: L('Column', 'عمود'),
         optional: true,
         item: {
           key: '',
           type: 'group',
           fields: [
-            { key: 'title', label: 'Title', type: 'localized' },
+            { key: 'title', label: L('Title', 'العنوان'), type: 'localized' },
             {
               key: 'links',
-              label: 'Links',
+              label: L('Links', 'الروابط'),
               type: 'array',
-              itemLabel: 'Link',
+              itemLabel: L('Link', 'رابط'),
               item: { key: '', type: 'group', fields: navItemFields },
             },
           ],
@@ -93,13 +112,13 @@ export const siteSchema: Field[] = [
   },
   {
     key: 'features',
-    label: 'Features',
+    label: L('Features', 'الميزات'),
     type: 'group',
     optional: true,
     fields: [
       {
         key: 'scrollTop',
-        label: 'Show scroll-to-top button',
+        label: L('Show scroll-to-top button', 'إظهار زر العودة للأعلى'),
         type: 'boolean',
         default: true,
       },

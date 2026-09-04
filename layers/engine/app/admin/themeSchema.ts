@@ -1,54 +1,62 @@
 /**
  * Editing schema for ThemeConfig — same descriptor system as the sections, so
- * the theme editor and its validation come from one source too.
+ * the theme editor and its validation come from one source too. Labels are
+ * localized (en/ar) for the bilingual dashboard.
  */
 import type { Field } from '../types/schema'
+import type { Localized } from '../types/template'
+
+const L = (en: string, ar: string): Localized => ({ en, ar })
 
 const palette = (): Field[] => [
-  { key: 'bg', label: 'Background', type: 'color' },
-  { key: 'surface', label: 'Surface', type: 'color' },
-  { key: 'surface2', label: 'Surface 2', type: 'color' },
-  { key: 'surface3', label: 'Surface 3', type: 'color' },
-  { key: 'border', label: 'Border', type: 'color' },
-  { key: 'text', label: 'Text', type: 'color' },
-  { key: 'textMuted', label: 'Muted text', type: 'color' },
-  { key: 'accent', label: 'Accent', type: 'color' },
-  { key: 'accentStrong', label: 'Accent (strong / button fill)', type: 'color' },
-  { key: 'glow', label: 'Glow', type: 'color' },
+  { key: 'bg', label: L('Background', 'الخلفية'), type: 'color' },
+  { key: 'surface', label: L('Surface', 'السطح'), type: 'color' },
+  { key: 'surface2', label: L('Surface 2', 'السطح ٢'), type: 'color' },
+  { key: 'surface3', label: L('Surface 3', 'السطح ٣'), type: 'color' },
+  { key: 'border', label: L('Border', 'الحدود'), type: 'color' },
+  { key: 'text', label: L('Text', 'النص'), type: 'color' },
+  { key: 'textMuted', label: L('Muted text', 'نص خافت'), type: 'color' },
+  { key: 'accent', label: L('Accent', 'اللون المميّز'), type: 'color' },
+  {
+    key: 'accentStrong',
+    label: L('Accent (strong / button fill)', 'اللون المميّز الغامق'),
+    type: 'color',
+  },
+  { key: 'glow', label: L('Glow', 'التوهّج'), type: 'color' },
 ]
 
 const selectOptions = (values: string[]) => values.map((v) => ({ value: v, label: v }))
 
 export const themeSchema: Field[] = [
-  { key: 'light', label: 'Light palette', type: 'group', fields: palette() },
-  { key: 'dark', label: 'Dark palette', type: 'group', fields: palette() },
+  { key: 'light', label: L('Light palette', 'الألوان الفاتحة'), type: 'group', fields: palette() },
+  { key: 'dark', label: L('Dark palette', 'الألوان الداكنة'), type: 'group', fields: palette() },
   {
     key: 'shape',
-    label: 'Corner shape',
+    label: L('Corner shape', 'شكل الزوايا'),
     type: 'select',
     options: selectOptions(['sharp', 'soft', 'pill']),
   },
   {
     key: 'density',
-    label: 'Spacing density',
+    label: L('Spacing density', 'كثافة التباعد'),
     type: 'select',
     options: selectOptions(['compact', 'default', 'airy']),
   },
   {
     key: 'typeScale',
-    label: 'Type scale',
+    label: L('Type scale', 'مقياس الخط'),
     type: 'select',
     options: selectOptions(['compact', 'default', 'spacious']),
   },
   {
     key: 'fonts',
-    label: 'Fonts',
+    label: L('Fonts', 'الخطوط'),
     type: 'group',
     optional: true,
     fields: [
-      { key: 'display', label: 'Display font', type: 'text', optional: true },
-      { key: 'body', label: 'Body font', type: 'text', optional: true },
-      { key: 'arabic', label: 'Arabic font', type: 'text', optional: true },
+      { key: 'display', label: L('Display font', 'خط العناوين'), type: 'text', optional: true },
+      { key: 'body', label: L('Body font', 'خط النص'), type: 'text', optional: true },
+      { key: 'arabic', label: L('Arabic font', 'الخط العربي'), type: 'text', optional: true },
     ],
   },
 ]
