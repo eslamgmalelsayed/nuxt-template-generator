@@ -11,6 +11,10 @@ dist
 .lighthouseci
 lh-*.json
 
+# runtime data (SQLite DB + uploads live on a mounted volume in prod)
+/data
+/public/uploads
+
 # env & logs
 .env
 *.log

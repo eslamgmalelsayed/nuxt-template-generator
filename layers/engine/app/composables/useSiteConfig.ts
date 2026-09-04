@@ -1,21 +1,27 @@
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useAppConfig } from 'nuxt/app'
+import { useAppConfig, useState } from 'nuxt/app'
 import type { Localized, LocaleCode, SiteConfig, ThemeConfig } from '../types/template'
+
+type Content = { site: SiteConfig | null; theme: ThemeConfig | null }
 
 /**
  * Exposes the active site's config + theme to engine components.
  *
- * Each app (consumer of the @strata/engine layer) provides its content via
- * `app.config.ts` → `{ site, theme }`. The engine never imports app content
- * directly, which is what makes it reusable across every business template.
+ * Content is sourced from the DB (loaded once by the site-content plugin into
+ * useState) so the dashboard can edit it at runtime. app.config.ts still holds
+ * the build-time defaults — used to seed the DB, and as a safety fallback if the
+ * content state is ever unavailable. Returns plain objects (a snapshot), so
+ * components keep reading `config.x` / `theme.x` synchronously.
  *
  * `tl()` resolves a Localized value against the current locale.
  */
 export function useSiteConfig() {
+  const content = useState<Content | null>('site-content', () => null)
   const appConfig = useAppConfig() as unknown as { site: SiteConfig; theme: ThemeConfig }
-  const config = appConfig.site
-  const theme = appConfig.theme
+
+  const config = content.value?.site ?? appConfig.site
+  const theme = content.value?.theme ?? appConfig.theme
 
   const { locale } = useI18n()
 
