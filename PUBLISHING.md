@@ -21,8 +21,8 @@ step with the git tag.
 ## Consuming it (client repo)
 
 ```jsonc
-// package.json
-"dependencies": { "@islamz/site-engine": "^0.2.0" }
+// package.json — "latest" so you never hand-bump a version per client
+"dependencies": { "@islamz/site-engine": "latest" }
 ```
 
 ```ts
@@ -38,6 +38,21 @@ nodeLinker: hoisted
 ```
 
 (Without it, the engine's `nuxt.config` modules/server silently don't load.)
+
+### How "latest" actually pulls updates
+
+The committed `pnpm-lock.yaml` pins the exact version, so a plain
+`pnpm install` (and the Docker build's `--frozen-lockfile`) stays reproducible —
+it does **not** silently float. To pull a newer engine, run:
+
+```bash
+pnpm update @islamz/site-engine   # re-resolves "latest", updates the lockfile
+```
+
+then commit the lockfile and rebuild/redeploy. So: `latest` means "no manual
+version editing" — you just `pnpm update` when you want the new engine, and each
+deploy is still reproducible from its lockfile. Re-test after an engine release,
+since a new version can carry breaking changes.
 
 ## Local development (without publishing)
 
