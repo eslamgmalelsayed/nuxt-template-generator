@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import { useSiteConfig } from '../composables/useSiteConfig'
 
-const { config, tl } = useSiteConfig()
+const { config, tl } = useSiteContent()
 const { t } = useI18n()
 const year = new Date().getFullYear()
 </script>

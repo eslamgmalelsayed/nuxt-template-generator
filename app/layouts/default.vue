@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useSiteConfig } from '../composables/useSiteConfig'
 
 const { t } = useI18n()
-const { config } = useSiteConfig()
+const { config } = useSiteContent()
 
 // scroll-to-top shows by default; a template can disable it via config.features
 const showScrollTop = computed(() => config.features?.scrollTop !== false)

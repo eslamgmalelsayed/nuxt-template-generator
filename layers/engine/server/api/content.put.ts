@@ -1,14 +1,12 @@
-import type { SiteConfig, ThemeConfig, Section } from '../../app/types/template'
-import { sectionSchemas } from '../../app/admin/sectionSchemas'
-import { themeSchema } from '../../app/admin/themeSchema'
-import { siteSchema } from '../../app/admin/siteSchema'
-import { cleanData, validateFields, resolveLabel } from '../../app/admin/schemaUtils'
+import type { SiteConfig, ThemeConfig } from '../../app/types/template'
 
 /**
  * Saves edited content and/or theme (dashboard → DB). Auth-protected.
- * Accepts a partial body: { site?, theme? }. Section data is validated and
- * pruned from the SAME schema registry the dashboard forms use, so the server
- * never trusts the client's shaping.
+ * Accepts a partial body: { site?, theme? }.
+ *
+ * The engine is headless — the field-level schemas live in the client — so the
+ * server validates STRUCTURE only (guards the store from corruption). The
+ * dashboard does the per-field validation + pruning client-side before PUT.
  */
 
 function isObject(v: unknown): v is Record<string, unknown> {
@@ -35,38 +33,6 @@ function assertThemeShape(v: unknown): asserts v is ThemeConfig {
   }
 }
 
-/**
- * Validates + prunes a SiteConfig from the same schemas the dashboard uses:
- * site-level fields via siteSchema, each section via its sectionSchema. `key`
- * and `sections` are preserved through the site-level clean.
- */
-function validateAndCleanSite(site: SiteConfig): SiteConfig {
-  const errors: string[] = []
-
-  const siteRecord = site as unknown as Record<string, unknown>
-  for (const e of validateFields(siteSchema, siteRecord)) errors.push(e)
-
-  const sections = site.sections.map((s: Section) => {
-    const schema = sectionSchemas[s.component]
-    if (!schema) return s
-    const data = (s.data ?? {}) as Record<string, unknown>
-    const label = resolveLabel(schema.label)
-    for (const e of validateFields(schema.fields, data)) errors.push(`${label}: ${e}`)
-    return { ...s, data: cleanData(schema.fields, data) }
-  })
-
-  if (errors.length) {
-    throw createError({
-      statusCode: 422,
-      statusMessage: 'Validation failed',
-      data: { errors },
-    })
-  }
-
-  const cleanedTop = cleanData(siteSchema, siteRecord)
-  return { ...site, ...cleanedTop, sections }
-}
-
 export default defineEventHandler(async (event) => {
   await requireUserSession(event)
 
@@ -77,22 +43,11 @@ export default defineEventHandler(async (event) => {
 
   if (body.site !== undefined) {
     assertSiteShape(body.site)
-    writeDocument('site', validateAndCleanSite(body.site))
+    writeDocument('site', body.site)
   }
   if (body.theme !== undefined) {
     assertThemeShape(body.theme)
-    const themeErrors = validateFields(
-      themeSchema,
-      body.theme as unknown as Record<string, unknown>,
-    )
-    if (themeErrors.length) {
-      throw createError({
-        statusCode: 422,
-        statusMessage: 'Validation failed',
-        data: { errors: themeErrors },
-      })
-    }
-    writeDocument('theme', cleanData(themeSchema, body.theme as unknown as Record<string, unknown>))
+    writeDocument('theme', body.theme)
   }
 
   return getContent()

@@ -2,8 +2,8 @@
 import { reactive, ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useState } from 'nuxt/app'
-import { useSiteConfig } from '../../composables/useSiteConfig'
-import { siteSchema } from '../../admin/siteSchema'
+import { useSiteContent } from '../../composables/useSiteContent'
+import { useSchemas } from '../../composables/useSchemas'
 import { cleanData, validateFields } from '../../admin/schemaUtils'
 import type { SiteConfig, ThemeConfig } from '../../types/template'
 
@@ -12,7 +12,8 @@ defineI18nRoute(false)
 
 const { t, locale } = useI18n()
 const loc = computed(() => locale.value as 'en' | 'ar')
-const { config } = useSiteConfig()
+const { config } = useSiteContent()
+const { site: siteSchema } = useSchemas()
 
 // Full clone; the Site page edits only the site-level fields (siteSchema),
 // sections + key are preserved on save.

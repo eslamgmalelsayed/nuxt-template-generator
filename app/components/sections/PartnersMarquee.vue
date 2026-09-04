@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { useSiteConfig } from '../../composables/useSiteConfig'
-import type { PartnersData } from '../../types/template'
+import type { PartnersData } from '#engine/types'
 
 // Auto-scrolling marquee variant — infinite logo strip, pauses on hover,
 // falls back to a static centered wrap under prefers-reduced-motion.
 defineProps<{ sectionId: string; data: PartnersData }>()
-const { tl } = useSiteConfig()
+const { tl } = useSiteContent()
 </script>
 
 <template>

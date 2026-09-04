@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { useSiteConfig } from '../../composables/useSiteConfig'
-import type { HeroData } from '../../types/template'
+import type { HeroData } from '#engine/types'
 
 // Centered hero variant — everything stacked and centered, with the media
 // as a wide band beneath the CTAs (contrast to the default split layout).
 defineProps<{ sectionId: string; data: HeroData }>()
-const { tl } = useSiteConfig()
+const { tl } = useSiteContent()
 </script>
 
 <template>

@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { useSiteConfig } from '../../composables/useSiteConfig'
-import type { ProjectsData } from '../../types/template'
+import type { ProjectsData } from '#engine/types'
 
 // Compact list variant — thumbnail + category/title rows, vs the default
 // large image-card gallery.
 defineProps<{ sectionId: string; data: ProjectsData }>()
-const { tl } = useSiteConfig()
+const { tl } = useSiteContent()
 
 const grads = [
   'linear-gradient(135deg,#0f172e,#2f7bff)',

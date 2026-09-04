@@ -3,8 +3,8 @@
  * the theme editor and its validation come from one source too. Labels are
  * localized (en/ar) for the bilingual dashboard.
  */
-import type { Field } from '../types/schema'
-import type { Localized } from '../types/template'
+import type { Field } from '#engine/types'
+import type { Localized } from '#engine/types'
 
 const L = (en: string, ar: string): Localized => ({ en, ar })
 

@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { useSiteConfig } from '../../composables/useSiteConfig'
-import type { ProjectsData } from '../../types/template'
+import type { ProjectsData } from '#engine/types'
 
 defineProps<{ sectionId: string; data: ProjectsData }>()
-const { tl } = useSiteConfig()
+const { tl } = useSiteContent()
 
 // tasteful gradient placeholders (no external images -> stays self-contained for SSG)
 const grads = [

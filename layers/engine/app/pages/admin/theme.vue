@@ -2,8 +2,8 @@
 import { reactive, ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useState } from 'nuxt/app'
-import { useSiteConfig } from '../../composables/useSiteConfig'
-import { themeSchema, themePresetDefaults } from '../../admin/themeSchema'
+import { useSiteContent } from '../../composables/useSiteContent'
+import { useSchemas } from '../../composables/useSchemas'
 import { cleanData, validateFields } from '../../admin/schemaUtils'
 import type { SiteConfig, ThemeConfig, ThemePalette } from '../../types/template'
 
@@ -12,13 +12,17 @@ defineI18nRoute(false)
 
 const { t, locale } = useI18n()
 const loc = computed(() => locale.value as 'en' | 'ar')
-const { theme } = useSiteConfig()
+const { theme } = useSiteContent()
+const { theme: themeSchema } = useSchemas()
+
+// Generic ThemeConfig preset defaults, used when a theme omits them.
+const presetDefaults = { shape: 'soft', density: 'default', typeScale: 'default' } as const
 
 // Editable clone; fill preset defaults so the selects reflect the real theme.
 const draft = reactive(JSON.parse(JSON.stringify(theme)) as ThemeConfig)
-draft.shape ??= themePresetDefaults.shape as ThemeConfig['shape']
-draft.density ??= themePresetDefaults.density as ThemeConfig['density']
-draft.typeScale ??= themePresetDefaults.typeScale as ThemeConfig['typeScale']
+draft.shape ??= presetDefaults.shape as ThemeConfig['shape']
+draft.density ??= presetDefaults.density as ThemeConfig['density']
+draft.typeScale ??= presetDefaults.typeScale as ThemeConfig['typeScale']
 
 // Live preview toggles between the light and dark palette being edited.
 const previewMode = ref<'light' | 'dark'>('light')

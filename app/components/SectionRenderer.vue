@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Component } from 'vue'
-import type { Section, SectionComponent } from '../types/template'
+import type { Section, SectionComponent } from '#engine/types'
 import HeroSection from './sections/HeroSection.vue'
 import HeroCentered from './sections/HeroCentered.vue'
 import StatsSection from './sections/StatsSection.vue'

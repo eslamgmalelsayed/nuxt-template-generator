@@ -6,7 +6,7 @@ type Content = { site: SiteConfig | null; theme: ThemeConfig | null }
 /**
  * Loads live content from the DB once during SSR and hands it to the client via
  * the Nuxt payload, so every component reads it synchronously through
- * useSiteConfig() → useState('site-content'). No per-component fetching.
+ * useSiteContent() → useState('site-content'). No per-component fetching.
  */
 export default defineNuxtPlugin(async () => {
   const content = useState<Content | null>('site-content', () => null)

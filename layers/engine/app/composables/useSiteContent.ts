@@ -16,7 +16,7 @@ type Content = { site: SiteConfig | null; theme: ThemeConfig | null }
  *
  * `tl()` resolves a Localized value against the current locale.
  */
-export function useSiteConfig() {
+export function useSiteContent() {
   const content = useState<Content | null>('site-content', () => null)
   const appConfig = useAppConfig() as unknown as { site: SiteConfig; theme: ThemeConfig }
 

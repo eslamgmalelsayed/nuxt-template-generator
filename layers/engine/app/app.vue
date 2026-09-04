@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useSiteConfig } from './composables/useSiteConfig'
+import { useSiteContent } from './composables/useSiteContent'
 import type {
   ThemePalette,
   ThemeConfig,
@@ -11,7 +11,7 @@ import type {
 
 // i18n-driven <html lang> and dir (rtl for Arabic)
 const head = useLocaleHead()
-const { theme } = useSiteConfig()
+const { theme } = useSiteContent()
 
 // Inject the active preset's palette as CSS variables so a different template
 // re-skins the whole site with no component changes (SSG-safe, no FOUC).

@@ -76,3 +76,24 @@ export interface SectionSchema {
 }
 
 export type SectionSchemaRegistry = Partial<Record<SectionComponent, SectionSchema>>
+
+/**
+ * The content model a client registers with the (headless) engine dashboard.
+ * The engine ships no schemas of its own — the client provides them via
+ * app.config, and the dashboard builds its forms + validation from them.
+ */
+export interface DashboardSchemas {
+  sections: SectionSchemaRegistry
+  site: Field[]
+  theme: Field[]
+}
+
+// The engine's dashboard reads these from app.config (client-provided).
+declare module 'nuxt/schema' {
+  interface AppConfigInput {
+    schemas?: DashboardSchemas
+  }
+  interface AppConfig {
+    schemas: DashboardSchemas
+  }
+}

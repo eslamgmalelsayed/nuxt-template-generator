@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { useSiteConfig } from '../composables/useSiteConfig'
-
-const { config, sections, tl } = useSiteConfig()
+const { config, sections, tl } = useSiteContent()
 
 // Per-locale SEO meta (getters keep it reactive to locale changes)
 useSeoMeta({

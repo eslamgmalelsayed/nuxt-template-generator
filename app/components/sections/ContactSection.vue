@@ -2,12 +2,10 @@
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import * as v from 'valibot'
-import { useSiteConfig } from '../../composables/useSiteConfig'
-import { useForm } from '../../composables/useForm'
-import type { ContactData } from '../../types/template'
+import type { ContactData } from '#engine/types'
 
 defineProps<{ sectionId: string; data: ContactData }>()
-const { tl } = useSiteConfig()
+const { tl } = useSiteContent()
 const { t } = useI18n()
 
 // Schema = single source of truth. Messages are localized (current locale).

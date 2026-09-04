@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { useSiteConfig } from '../../composables/useSiteConfig'
-import type { AboutData } from '../../types/template'
+import type { AboutData } from '#engine/types'
 
 defineProps<{ sectionId: string; data: AboutData }>()
-const { tl } = useSiteConfig()
+const { tl } = useSiteContent()
 </script>
 
 <template>

@@ -5,8 +5,8 @@
  * SectionComponent names the render registry uses. Labels are localized (en/ar)
  * so the dashboard renders in either language.
  */
-import type { Field, SectionSchema, SectionSchemaRegistry } from '../types/schema'
-import type { Localized } from '../types/template'
+import type { Field, SectionSchema, SectionSchemaRegistry } from '#engine/types'
+import type { Localized } from '#engine/types'
 
 /** Compact localized-label helper. */
 const L = (en: string, ar: string): Localized => ({ en, ar })

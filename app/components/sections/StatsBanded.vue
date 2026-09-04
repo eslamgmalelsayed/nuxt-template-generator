@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { useSiteConfig } from '../../composables/useSiteConfig'
-import type { StatsData } from '../../types/template'
+import type { StatsData } from '#engine/types'
 
 // Banded stats variant — one bordered card with divided columns, vs the default
 // open 4-up grid.
 defineProps<{ sectionId: string; data: StatsData }>()
-const { tl } = useSiteConfig()
+const { tl } = useSiteContent()
 </script>
 
 <template>

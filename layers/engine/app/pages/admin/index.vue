@@ -2,8 +2,8 @@
 import { reactive, ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useState } from 'nuxt/app'
-import { useSiteConfig } from '../../composables/useSiteConfig'
-import { sectionSchemas } from '../../admin/sectionSchemas'
+import { useSiteContent } from '../../composables/useSiteContent'
+import { useSchemas } from '../../composables/useSchemas'
 import { cleanData, validateFields, defaultForField, resolveLabel } from '../../admin/schemaUtils'
 import type { SiteConfig, ThemeConfig, SectionComponent } from '../../types/template'
 
@@ -12,7 +12,8 @@ defineI18nRoute(false)
 
 const { t, locale } = useI18n()
 const loc = computed(() => locale.value as 'en' | 'ar')
-const { config } = useSiteConfig()
+const { config } = useSiteContent()
+const { sections: sectionSchemas } = useSchemas()
 
 // Editable deep clone of the live content (plain JSON → safe to mutate freely).
 const draft = reactive(JSON.parse(JSON.stringify(config)) as SiteConfig)

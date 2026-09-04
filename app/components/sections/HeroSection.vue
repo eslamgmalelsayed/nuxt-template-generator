@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { useSiteConfig } from '../../composables/useSiteConfig'
-import type { HeroData } from '../../types/template'
+import type { HeroData } from '#engine/types'
 
 defineProps<{ sectionId: string; data: HeroData }>()
-const { tl } = useSiteConfig()
+const { tl } = useSiteContent()
 </script>
 
 <template>
