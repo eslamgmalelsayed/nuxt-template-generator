@@ -1,7 +1,9 @@
 name: Quality
 
-# Lint + Lighthouse gate. Accessibility/SEO below threshold fail the run
-# (see lighthouserc.cjs); performance is floored at 0.85.
+# Lint + format + build gate. (The old Lighthouse/SSG audit was dropped: the app
+# is SSR now, and this repo is a headless dashboard harness, so a static
+# Lighthouse run doesn't apply. A proper SSR Lighthouse job can live in the
+# client sites, which are the real marketing pages.)
 on:
   push:
     branches: [main]
@@ -9,7 +11,7 @@ on:
     branches: [main]
 
 jobs:
-  lint:
+  quality:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -21,23 +23,4 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm lint
       - run: pnpm format:check
-
-  lighthouse:
-    runs-on: ubuntu-latest # Chrome is preinstalled on GitHub's Ubuntu runners
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: pnpm
-      - run: pnpm install --frozen-lockfile
-      - name: Build + Lighthouse
-        run: pnpm test:quality
-      - name: Upload Lighthouse reports
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: lighthouse
-          path: .lighthouseci
-          if-no-files-found: ignore
+      - run: pnpm build
