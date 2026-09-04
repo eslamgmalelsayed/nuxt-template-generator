@@ -1,0 +1,11 @@
+.git
+node_modules
+.nuxt
+.output
+dist
+data
+public/uploads
+*.log
+.env
+.DS_Store
+Thumbs.db

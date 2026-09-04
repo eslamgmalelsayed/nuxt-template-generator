@@ -1,0 +1,14 @@
+# One container per site. Content (SQLite) + uploads live on the app-data
+# volume, so they survive rebuilds and redeploys.
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    env_file: .env
+    volumes:
+      - app-data:/app/data
+
+volumes:
+  app-data:
